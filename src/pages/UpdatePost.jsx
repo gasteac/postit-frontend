@@ -26,6 +26,7 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { ScrollToTop } from "../components/ScrollToTop";
 
 export const UpdatePost = () => {
   const navigate = useNavigate();
@@ -264,6 +265,7 @@ const handleDelete = async () => {
 
   return (
     <div className="p-3 mt-10 max-w-3xl mx-auto min-h-screen">
+      <ScrollToTop />
       {updatePostError && (
         <Alert
           color="failure"

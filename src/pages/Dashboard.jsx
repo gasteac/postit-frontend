@@ -8,6 +8,7 @@ import {
   DashComments,
   DashboardComponent,
 } from "../components";
+import { ScrollToTop } from "../components/ScrollToTop";
 
 export const Dashboard = () => {
   //location nos devuelve un objeto con información de la URL actual y los parametros
@@ -24,6 +25,7 @@ export const Dashboard = () => {
   }, [location.search]);
   return (
     <div className="flex relative flex-col md:flex-row w-screen min-h-screen ">
+      <ScrollToTop />
       <div className="md:min-w-56" />
       <div className=" md:fixed top-[12%] left-0">
         <DashSideBar />

@@ -5,6 +5,7 @@ import { SearchResults } from "../components/SearchResults";
 import axios from "axios";
 axios.defaults.withCredentials = true;
 import { Button } from "flowbite-react";
+import { ScrollToTop } from "../components/ScrollToTop";
 
 export const Search = () => {
   const [showMore, setShowMore] = useState(false);
@@ -103,6 +104,7 @@ export const Search = () => {
 
   return (
     <div className="min-h-screen">
+      <ScrollToTop />
       <SearchBar
         setSearchData={setSearchData}
         handleSubmit={handleSubmit}

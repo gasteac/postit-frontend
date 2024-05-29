@@ -22,6 +22,7 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { ScrollToTop } from "../components/ScrollToTop";
 
 export const CreatePost = () => {
   const navigate = useNavigate();
@@ -186,6 +187,7 @@ export const CreatePost = () => {
   });
   return (
     <>
+      <ScrollToTop />
       {!currentUser ? (
         <div className="min-h-screen w-screen flex flex-col gap-5 items-center justify-start mt-12">
           <h1 className="text-5xl mb-2 text-center">

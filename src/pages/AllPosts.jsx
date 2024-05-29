@@ -5,6 +5,7 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 import { Button, Spinner, Table } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
+import { ScrollToTop } from "../components/ScrollToTop";
 
 export const AllPosts = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -76,6 +77,7 @@ export const AllPosts = () => {
 
   return (
     <>
+      <ScrollToTop />
       {loading ? (
         <div className="flex w-full h-screen items-start justify-center mt-12">
           <Spinner size="xl" />

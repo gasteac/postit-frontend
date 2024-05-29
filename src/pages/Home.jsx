@@ -6,6 +6,7 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 import { PostCard } from "../components/PostCard";
 import Tilt from "react-parallax-tilt";
+import { ScrollToTop } from "../components/ScrollToTop";
 
 export const Home = () => {
   // utilizamos useParams() que nos devuelve los parámetros q estan en la URL
@@ -41,6 +42,7 @@ export const Home = () => {
 
   return (
     <div className="w-screen flex flex-col  items-center justify-center mt-12 min-h-screen ">
+      <ScrollToTop />
       <div className="text-4xl lg:text-5xl text-center mb-5">
         {currentUser ? (
           <div className="flex items-center justify-center gap-3 flex-wrap">
