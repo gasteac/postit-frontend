@@ -4,7 +4,7 @@ import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 import { app } from "../firebase";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { signInStart, signInSuccess } from "../redux/user/userSlice";
+import { signInFailure, signInStart, signInSuccess, signUpFailure } from "../redux/user/userSlice";
 
 //OAuth es un componente que se encarga de manejar la autenticación con Google
 export const OAuth = () => {
