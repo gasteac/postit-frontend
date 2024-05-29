@@ -50,7 +50,7 @@ const handleDelete = async () => {
     try {
       console.log(postIdtoDelete, currentUser._id);
       const response = await axios.delete(
-        `${import.meta.env.VITE_BACKEND_URL}/api/post/deletepost/${postIdtoDelete}/${postOwnerId}`
+        `${import.meta.env.VITE_BACKEND_URL}/api/post/deletepost/${postIdtoDelete}/${postOwnerId}`, { withCredentials: true }
       );
       if (response.status === 200) {
         navigate(
@@ -75,7 +75,7 @@ const handleDelete = async () => {
   useEffect(() => {
     try {
       const getPostById = async () => {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?postId=${postId}`);
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?postId=${postId}`, { withCredentials: true });
         if (res.status !== 200) setUpdatePostError(res.data.message);
         if (res.status === 200) {
           setPostData(res.data.posts[0]);
@@ -219,7 +219,7 @@ const handleDelete = async () => {
             title,
             content,
             category,
-          }
+          }, { withCredentials: true }
         );
         if (postSaved.status === 200) {
           setUpdatePostError(null);
@@ -244,7 +244,7 @@ const handleDelete = async () => {
   useEffect(() => {
     try {
       const getPostById = async () => {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?postId=${postId}`);
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?postId=${postId}`, { withCredentials: true });
         if (res.status !== 200) setUpdatePostError(res.data.message);
         if (res.status === 200) {
           setPostData(res.data.posts[0]);

@@ -156,7 +156,7 @@ export const CreatePost = () => {
           content,
           category,
           image: imageFileUrl ? imageFileUrl : undefined,
-        });
+        }, { withCredentials: true });
         if (postSaved.status === 201) {
           setUploadPostError(null);
           formik.resetForm();

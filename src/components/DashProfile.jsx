@@ -148,7 +148,7 @@ const navigate = useNavigate();
                 email: currentUser.email,
                 password: "",
                 profilePic: downloadURL,
-              })
+            }, { withCredentials: true })
               .then((response) => {
                 if (response.status === 200) {
                   dispatch(modifyUserSuccess(response.data));
@@ -226,7 +226,7 @@ const navigate = useNavigate();
           username: username,
           email: email,
           password: password,
-        });
+        }, { withCredentials: true });
         if (res.status === 200) {
           //obtengo el usuario de la respuesta, que esta en data
           // Si la petición es exitosa, se dispara la acción SignUpSuccess, que guarda el usuario en el estado global y redirige al usuario a la página principal.
@@ -250,7 +250,7 @@ const navigate = useNavigate();
   const deleteUser = async () => {
     setShowModal(false);
     try {
-      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/user/delete/${currentUser._id}`);
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/user/delete/${currentUser._id}`, { withCredentials: true });
       dispatch(deleteUserSuccess());
       localStorage.removeItem("persist:root");
     } catch (error) {
@@ -260,7 +260,7 @@ const navigate = useNavigate();
 
   const handleSignOut = () => {
     try {
-      axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/logout`);
+      axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/logout`, { withCredentials: true });
       dispatch(logoutSuccess());
       navigate("/signin");
     } catch (error) {

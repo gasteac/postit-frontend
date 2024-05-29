@@ -9,7 +9,7 @@ export const Comment = ({ comment, onLike, handleDeleteComment }) => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/${comment.userId}`);
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/${comment.userId}`, { withCredentials: true });
         if (res.status !== 200) {
           return;
         }

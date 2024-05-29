@@ -16,7 +16,7 @@ export const AllPosts = () => {
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?limit=4`);
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?limit=4`, { withCredentials: true });
         const { data } = res;
         if (res.status === 200) {
           setAllPosts(data.posts);
@@ -36,7 +36,7 @@ export const AllPosts = () => {
 
   useEffect(() => {
     const fetchTotalPosts = async () => {
-      const res1 = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts`);
+      const res1 = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts`, { withCredentials: true });
       const { data } = res1;
       const { totalPosts: totalPosts2 } = data;
       const totalPostsRest = totalPosts2 - 4;
@@ -51,7 +51,7 @@ export const AllPosts = () => {
     const numberOfPosts = allPosts.length;
     const startIndex = numberOfPosts;
     const response = await axios.get(
-      `${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?startIndex=${startIndex}`
+      `${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?startIndex=${startIndex}`, { withCredentials: true }
     );
     const data = response?.data;
     if (response.status !== 200) {

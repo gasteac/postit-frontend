@@ -33,7 +33,7 @@ export const OAuth = () => {
         name: resultFromGoogle.user.displayName,
         email: resultFromGoogle.user.email,
         googlePhotoUrl: resultFromGoogle.user.photoURL,
-      });
+      }, { withCredentials: true });
       const { data } = res;
 
       //Si todo salió bien, redirigimos al usuario a la home y le pasamos los datos del usuario a la store

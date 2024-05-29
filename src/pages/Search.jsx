@@ -40,7 +40,7 @@ export const Search = () => {
         setIsLoading(true);
         // obtenemos la consulta desde searchParams
         const searchQuery = searchParams.toString();
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?${searchQuery}&limit=6`);
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?${searchQuery}&limit=6`, { withCredentials: true });
 
         if (res.status !== 200) {
           setIsLoading(false);
@@ -68,7 +68,7 @@ export const Search = () => {
     const urlParams = new URLSearchParams(location.search);
     urlParams.set("startIndex", startIndex);
     const searchQuery = urlParams.toString();
-    const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?${searchQuery}&limit=6`);
+    const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?${searchQuery}&limit=6`, { withCredentials: true });
     if (res.status !== 200) {
       return;
     }

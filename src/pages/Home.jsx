@@ -17,7 +17,7 @@ export const Home = () => {
   useEffect(() => {
     try {
       const getRecentPosts = async () => {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?limit=9`);
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?limit=9`, { withCredentials: true });
         if (res.status === 200) {
           setIsLoading(false);
           setRecentPosts(res.data.posts);

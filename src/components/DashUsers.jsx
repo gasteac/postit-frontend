@@ -20,7 +20,7 @@ export const DashUsers = () => {
   const handleShowMore = async () => {
     const startIndex = users.length;
     try {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/getusers?startIndex=${startIndex}`);
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/getusers?startIndex=${startIndex}`, { withCredentials: true });
       if (res.statusText === "OK") {
           setUsers([...users, ...res.data.users]);
         if (res.data.users.length < 4) {
@@ -35,7 +35,7 @@ export const DashUsers = () => {
     const handleDelete = async () => {
       try {
         const response = await axios.delete(
-          `${import.meta.env.VITE_BACKEND_URL}/api/user/deleteuser/${userIdtoDelete}`
+          `${import.meta.env.VITE_BACKEND_URL}/api/user/deleteuser/${userIdtoDelete}, { withCredentials: true }`
         );
 
         if (response.status === 200) {
@@ -59,7 +59,7 @@ export const DashUsers = () => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/getusers`);
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/getusers`, { withCredentials: true });
 
         const { data } = res;
         if (res.status === 200) {
