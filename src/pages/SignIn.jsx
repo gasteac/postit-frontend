@@ -1,6 +1,7 @@
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { Link} from "react-router-dom";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {

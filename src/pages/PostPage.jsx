@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Modal, Spinner } from "flowbite-react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 import { CommentSection } from "../components/CommentSection";
 import { PostCard } from "../components/PostCard";
 import Tilt from "react-parallax-tilt";

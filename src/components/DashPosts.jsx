@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 import { Button, Modal, Spinner, Table } from "flowbite-react";
 import { deleteObject, getStorage, ref } from "firebase/storage";
 import { Link, useNavigate } from "react-router-dom";

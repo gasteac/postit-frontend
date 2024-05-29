@@ -12,6 +12,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutSuccess } from "../redux/user/userSlice";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 import { DarkThemeToggle } from "flowbite-react";
 export const Header = () => {
   const navigate = useNavigate();

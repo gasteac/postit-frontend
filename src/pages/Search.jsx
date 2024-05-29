@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { SearchBar } from "../components/SearchBar";
 import { SearchResults } from "../components/SearchResults";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 import { Button } from "flowbite-react";
 
 export const Search = () => {

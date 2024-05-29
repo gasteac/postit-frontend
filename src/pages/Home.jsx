@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Spinner } from "flowbite-react";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 import { PostCard } from "../components/PostCard";
 import Tilt from "react-parallax-tilt";
 

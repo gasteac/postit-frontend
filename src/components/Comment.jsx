@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 import moment from "moment";
 import { FaThumbsUp } from "react-icons/fa";
 import { useSelector } from "react-redux";

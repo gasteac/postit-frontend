@@ -3,6 +3,7 @@ import { AiFillGoogleCircle } from "react-icons/ai";
 import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 import { app } from "../firebase";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 import { useDispatch } from "react-redux";
 import { signInFailure, signInStart, signInSuccess, signUpFailure } from "../redux/user/userSlice";
 

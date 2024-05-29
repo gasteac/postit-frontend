@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 import { useNavigate } from "react-router-dom";
 import { Comment } from "./Comment";
 import { HiOutlineExclamationCircle } from "react-icons/hi";

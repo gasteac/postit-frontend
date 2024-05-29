@@ -11,6 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 import { logoutSuccess } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 

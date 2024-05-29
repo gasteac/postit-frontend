@@ -21,6 +21,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import "react-circular-progressbar/dist/styles.css";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

@@ -20,6 +20,7 @@ import { app } from "../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import axios from "axios";
+axios.defaults.withCredentials = true;
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
