@@ -57,7 +57,7 @@ export const CommentSection = ({ postId }) => {
         navigate("/signin");
         return;
       }
-      const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/comment/likeComment/${commentId}`, { withCredentials: true });
+      const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/comment/likeComment/${commentId}`);
       if (res.status === 200) {
         setComments(
           comments.map((comment) =>
