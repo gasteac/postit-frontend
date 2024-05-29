@@ -111,7 +111,7 @@ export const CreatePost = () => {
               content,
               category,
               image: downloadURL ? downloadURL : undefined,
-            })
+            }, { withCredentials: true })
             .then((response) => {
               if (response.status === 201) {
                 formik.resetForm();
