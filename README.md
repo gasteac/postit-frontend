@@ -2,7 +2,7 @@
 ### Main Page![mainPage](https://github.com/gasteac/mern-project/blob/main/client/public/images/1.jpg?raw=true)
 ### Admin Dashboard![adminDashboard](https://github.com/gasteac/mern-project/blob/main/client/public/images/2.jpg?raw=true)
 ### Post Page![postPage](https://github.com/gasteac/mern-project/blob/main/client/public/images/3.jpg?raw=true)
-#### Check it out here: [https://facerook.up.railway.app](https://facerook.up.railway.app)
+#### Check it out here: [https://postit-frontend-bice.vercel.app/](https://postit-frontend-bice.vercel.app/)
 ### This project was made with:
  - React + Vite
  - Redux

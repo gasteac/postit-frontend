@@ -44,7 +44,7 @@ export const SignIn = () => {
         const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signin`, {
           email: email.toLowerCase(),
           password,
-        });
+        }, { withCredentials: true });
         // Si la petición es exitosa, se dispara la acción SignInSuccess, que guarda el usuario en el estado global y redirige al usuario a la página principal.
         if (res.status !== 200) {
           //en data estan los datos del usuario
