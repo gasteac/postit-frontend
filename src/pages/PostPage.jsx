@@ -10,6 +10,8 @@ import { PostCard } from "../components/PostCard";
 import Tilt from "react-parallax-tilt";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { deleteObject, getStorage, ref } from "firebase/storage";
+import { ScrollToTop } from "../components/ScrollToTop";
+
 export const PostPage = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { postSlug } = useParams();
@@ -99,6 +101,7 @@ export const PostPage = () => {
     }
   return (
     <>
+      <ScrollToTop />
       {isLoading ? (
         <div className="flex w-full h-screen items-start justify-center mt-12">
           <Spinner size="xl" />
