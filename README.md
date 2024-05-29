@@ -16,3 +16,5 @@
  - Axios
  - JWT
  - Firebase
+
+### BACKEND:[https://github.com/gasteac/postit-backend/](https://github.com/gasteac/postit-backend/)
