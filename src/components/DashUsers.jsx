@@ -36,7 +36,7 @@ export const DashUsers = () => {
     const handleDelete = async () => {
       try {
         const response = await axios.delete(
-          `${import.meta.env.VITE_BACKEND_URL}/api/user/deleteuser/${userIdtoDelete}, { withCredentials: true }`
+          `${import.meta.env.VITE_BACKEND_URL}/api/user/deleteuser/${userIdtoDelete}`, { withCredentials: true }
         );
 
         if (response.status === 200) {
