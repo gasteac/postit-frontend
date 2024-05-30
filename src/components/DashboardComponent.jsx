@@ -153,15 +153,12 @@ export const DashboardComponent = () => {
                   <th>Image</th>
                   <th>Admin?</th>
                   <th>Date</th>
-                  <th>Delete</th>
                   <th></th>
                 </tr>
               </thead>
               {users?.map((user) => (
                 <tbody>
-                  {/* row 1 */}
                   <tr>
-
                     <td>
                       <div className="flex items-center gap-3">
                         <div className="avatar">
@@ -219,7 +216,7 @@ export const DashboardComponent = () => {
                     <td className="md:max-w-xl">{comment.content}</td>
                     <td>{comment.postId}</td>
                     <td>{comment.userId}</td>
-                                  </tr>
+                  </tr>
                 </tbody>
               ))}
             </table>
