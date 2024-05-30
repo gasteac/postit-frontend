@@ -34,11 +34,11 @@ export const SignUp = () => {
     },
     validationSchema: Yup.object({
       username: Yup.string()
-        .required("Required!")
+        .required("*")
         .min(4, "Must be 4 characters or more"),
-      email: Yup.string().required("Required!"),
+      email: Yup.string().required("*"),
       password: Yup.string()
-        .required("Required!")
+        .required("*")
         .min(5, "Must be 5 characters or more"),
     }),
     onSubmit: async ({ username, email, password }) => {
@@ -46,12 +46,12 @@ export const SignUp = () => {
         // Cuando el usuario envía el formulario, se dispara la acción SignUpStart, que cambia el estado isLoading a true.
         dispatch(signUpStart());
         // Hacemos una petición POST a la ruta /api/auth/signup con los datos del formulario. (trim saca los espacios en blanco al principio y al final de un string)
-        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`, {
+        const res = await axios.post(`/api/auth/signup`, {
           username: username,
           email: email,
           password: password,
         }, { withCredentials: true });
-        if (res.status !== 200){
+        if (res.status !== 200) {
           dispatch(signUpFailure());
         }
         if (res.status === 201) {
@@ -63,7 +63,7 @@ export const SignUp = () => {
       } catch (error) {
         console.log(error)
         setSignUpErrorMsg(error.response.data.message);
-   
+
         // Si la petición falla, se dispara la acción SignUpFailure, que cambia el estado isLoading a false y muestra un mensaje de error al usuario.
         dispatch(signUpFailure());
       }
@@ -74,85 +74,75 @@ export const SignUp = () => {
     <div className="mt-20 min-h-screen ">
       <ScrollToTop />
       <div className="flex p-3 max-w-lg mx-auto flex-col md:flex-row md:items-center gap-5">
-        {/* right side */}
         <div className="flex-1">
           {/* // Si hay un error en la autenticación, se muestra un mensaje de error, traido de redux */}
           {signUpErrorMsg ? (
-            <Alert className=" text-red-500 text-[0.8rem]  phone:text-[1rem] tablet:text-[1.2rem]">
-              {signUpErrorMsg}
-            </Alert>
+            <div role="alert" className="alert alert-error">
+              <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span> {signUpErrorMsg}</span>
+            </div>
           ) : null}
           <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
-            <div className="group">
-              <Label
-                value="Username"
-                className="group-focus-within:text-green-700"
-              ></Label>
-              <TextInput
-                type="text"
-                placeholder="username"
-                id="username"
-                name="username"
-                onChange={(e) => {
-                  formik.handleChange(e);
-                }}
-                value={formik.values.username}
-              />
+            <div className="group relative">
+              <label value="Username" className="input input-bordered flex items-center gap-2">
+                Name
+                <input type="text" className="grow" placeholder="Luke Tyson" id="username"
+                  name="username"
+                  onChange={(e) => {
+                    formik.handleChange(e);
+                  }}
+                  value={formik.values.username} />
+              </label>
               {formik.touched.username && formik.errors.username ? (
-                <h6 className="ml-2 text-red-500 text-[0.8rem]  phone:text-[1rem] tablet:text-[1.2rem]">
+                <h6 className="absolute top-[50%] right-2 ml-2 text-red-300 text-[0.9rem]">
                   {formik.errors.username}
                 </h6>
               ) : null}
             </div>
-            <div className="group">
-              <Label
-                value="Email"
-                className="group-focus-within:text-green-700"
-              ></Label>
-              <TextInput
-                type="email"
-                placeholder="name@company.com"
-                id="email"
-                name="email"
-                onChange={(e) => {
-                  formik.handleChange(e);
-                }}
-                value={formik.values.email}
-              />
+
+            <div className="group relative">
+              <label value="Email" className="input input-bordered flex items-center gap-2">
+                Email
+                <input type="email" className="grow" placeholder="luke@tyson.com" id="email"
+                  name="email"
+                  onChange={(e) => {
+                    formik.handleChange(e);
+                  }}
+                  value={formik.values.email} />
+              </label>
               {formik.touched.email && formik.errors.email ? (
-                <h6 className="ml-2 text-red-500 text-[0.8rem]  phone:text-[1rem] tablet:text-[1.2rem]">
+                <h6 className="absolute top-[50%] right-2 ml-2 text-red-300 text-[0.9rem] ">
                   {formik.errors.email}
                 </h6>
               ) : null}
             </div>
-            <div className="group">
-              <Label
-                value="Password"
-                className="group-focus-within:text-green-700"
-              ></Label>
-              <TextInput
-                type="password"
-                placeholder="password"
-                id="password"
-                name="password"
-                onChange={formik.handleChange}
-                value={formik.values.password}
-              />
+
+            <div className="group relative">
+              <label value="Password" className="input input-bordered flex items-center gap-2">
+                Password
+                <input type="password" className="grow" placeholder="*********" id="password"
+                  name="password"
+                  onChange={(e) => {
+                    formik.handleChange(e);
+                  }}
+                  value={formik.values.password} />
+              </label>
               {formik.touched.password && formik.errors.password ? (
-                <h6 className="ml-2 text-red-500 text-[0.8rem]  phone:text-[1rem] tablet:text-[1.2rem]">
+                <h6 className="absolute top-[50%] right-2 ml-2 text-red-300 text-[0.9rem]">
                   {formik.errors.password}
                 </h6>
               ) : null}
             </div>
+
+
             <Button
-              className="bg-[linear-gradient(135deg,_#9c77f3,_#5d55f6)] text-white"
+              className="btn btn-neutral"
               type="submit"
               disabled={isLoading}
             >
               {isLoading ? (
                 <>
-                  <Spinner size="sm" />
-                  <span className="ml-3">Loading..</span>
+                  <button className="loading loading-spinner">Loading</button>
                 </>
               ) : (
                 <span>Sign Up</span>
@@ -162,7 +152,7 @@ export const SignUp = () => {
           </form>
           <div className="flex gap-2 justify-end px-1 text-sm mt-3">
             <span>Have an account?</span>
-            <Link to="/signin" className="hiText font-bold">
+            <Link to="/signin" className="text-primary font-bold">
               Sign In
             </Link>
           </div>

@@ -28,28 +28,28 @@ export const SearchBar = ({ handleSubmit, searchData, setSearchData }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="z-20 w-screen flex-col gap-4 h-full p-4 md:flex-row bg-gray-300 dark:bg-gray-800 flex items-center justify-evenly"
+      className="z-20 w-screen flex-col gap-4 h-full p-4 md:flex-row  flex items-center justify-evenly"
     >
-      <TextInput
+      <input
         type="text"
-        className="w-full"
+        className="input input-bordered w-full md:flex-1 "
         id="searchTerm"
         placeholder="Search.."
         value={searchOptions.searchTerm}
         onChange={handleChange}
       />
-      <Select
-        className="w-full"
+      <select
+        className="select select-bordered w-full flex-1"
         id="order"
         value={searchOptions.order}
         onChange={handleChange}
       >
         <option value="desc">Latest</option>
         <option value="asc">Oldest</option>
-      </Select>
+      </select>
 
-      <Select
-        className="w-full"
+      <select
+        className="select select-bordered w-full flex-1"
         id="category"
         value={searchOptions.category}
         onChange={handleChange}
@@ -81,8 +81,8 @@ export const SearchBar = ({ handleSubmit, searchData, setSearchData }) => {
         <option value="games-videogames">Games & Videogames</option>
         <option value="news-current-events">News & Current Events</option>
         <option value="other">Other...</option>
-      </Select>
-      <Button type="submit">Search</Button>
+      </select>
+      <button type="submit" className="btn w-full md:flex-1">Search</button>
     </form>
   );
 };

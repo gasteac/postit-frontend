@@ -27,13 +27,13 @@ export const PostCard = ({ post }) => {
         </p>
 
         {/* <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black opacity-90 rounded-3xl lg:group-hover:bg-black lg:group-hover:bg-opacity-40 " /> */}
-        <Button
+        {/* <Button
           pill
           color={"gray"}
           className="absolute dark:bg-gray-600 shadow-2xl shadow-gray-700 top-[40%] lg:top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]   lg:group-hover:scale-[1.2] border-none lg:scale-0 lg:group-hover:left-[50%] lg:transition-all lg:ease-out lg:duration-300 "
         >
           See more
-        </Button>
+        </Button> */}
       </Link>
     </div>
   );

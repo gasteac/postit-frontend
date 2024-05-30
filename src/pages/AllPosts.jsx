@@ -6,6 +6,7 @@ axios.defaults.withCredentials = true;
 import { Button, Spinner, Table } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import { ScrollToTop } from "../components/ScrollToTop";
+import { PostCard } from "../components/PostCard";
 
 export const AllPosts = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -18,7 +19,7 @@ export const AllPosts = () => {
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?limit=4`, { withCredentials: true });
+        const res = await axios.get(`/api/post/getposts?limit=8`, { withCredentials: true });
         const { data } = res;
         if (res.status === 200) {
           setAllPosts(data.posts);
@@ -32,16 +33,15 @@ export const AllPosts = () => {
         setLoading(false);
       }
     };
-
     fetchPosts();
   }, []);
 
   useEffect(() => {
     const fetchTotalPosts = async () => {
-      const res1 = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts`, { withCredentials: true });
+      const res1 = await axios.get(`/api/post/getposts`, { withCredentials: true });
       const { data } = res1;
       const { totalPosts: totalPosts2 } = data;
-      const totalPostsRest = totalPosts2 - 4;
+      const totalPostsRest = totalPosts2 - 8;
       setTotalPosts(totalPostsRest);
     };
     fetchTotalPosts();
@@ -53,7 +53,7 @@ export const AllPosts = () => {
     const numberOfPosts = allPosts.length;
     const startIndex = numberOfPosts;
     const response = await axios.get(
-      `${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?startIndex=${startIndex}`, { withCredentials: true }
+      `/api/post/getposts?startIndex=${startIndex}`, { withCredentials: true }
     );
     const data = response?.data;
     if (response.status !== 200) {
@@ -83,97 +83,36 @@ export const AllPosts = () => {
           <Spinner size="xl" />
         </div>
       ) : (
-        <div className="py-6 min-h-screen px-4 md:max-w-[800px] table-auto overflow-x-scroll md:mx-auto scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-transparent dark:scrollbar-thumb-transparent">
+        <div className="w-screen flex flex-col items-center justify-start mt-12 min-h-screen">
           {allPosts.length > 0 ? (
             <>
-              <Table
-                hoverable
-                className="bg-white dark:bg-slate-800 rounded-xl "
-              >
-                <Table.Head>
-                  <Table.HeadCell className="text-nowrap">
-                    Post Image
-                  </Table.HeadCell>
-                  <Table.HeadCell className="text-nowrap">
-                    Post Title
-                  </Table.HeadCell>
-                  <Table.HeadCell className="text-nowrap">
-                    Date updated
-                  </Table.HeadCell>
-                  <Table.HeadCell>Category</Table.HeadCell>
-                </Table.Head>
+              <div className="mt-5 flex flex-wrap items-center justify-center">
                 {allPosts?.map((post) => (
-                  <Table.Body key={post._id} className="divide-y-2">
-                    <Table.Row
-                      className="cursor-pointer"
-                      onClick={() => navigate(`/post/${post.slug}`)}
-                    >
-                      <Table.Cell as="div">
-                        <div className="w-32 h-20 bg-transparent">
-                          <img
-                            src={post.image}
-                            alt={post.title}
-                            className="object-cover w-full h-full rounded-lg"
-                          />
-                        </div>
-                      </Table.Cell>
-                      <Table.Cell>
-                        <Link
-                          className={`${
-                            currentUser && currentUser._id === post.userId
-                              ? "text-emerald-500 font-bold"
-                              : "font-medium"
-                          }`}
-                          to={`/posts/${post.slug}`}
-                        >
-                          {post.title}
-                        </Link>
-                      </Table.Cell>
-                      <Table.Cell
-                        className={`${
-                          currentUser && currentUser._id === post.userId
-                            ? "text-emerald-500 font-bold"
-                            : "font-medium"
-                        }`}
-                      >
-                        {" "}
-                        {new Date(post.updatedAt).toLocaleDateString()}
-                      </Table.Cell>
-                      <Table.Cell
-                        className={`${
-                          currentUser && currentUser._id === post.userId
-                            ? "text-emerald-500 font-bold"
-                            : "font-medium"
-                        }`}
-                      >
-                        {post.category}
-                      </Table.Cell>
-                    </Table.Row>
-                  </Table.Body>
+                  <PostCard key={post._id} post={post} />
                 ))}
-              </Table>
+              </div>
               {showMore && (
-                <Button
-                  gradientDuoTone="purpleToBlue"
-                  outline
-                  onClick={handleShowMore}
-                  className="mx-auto hover:brightness-90 dark:hover:brightness-115 p-1 my-5 self-center "
-                >
-                  Show more
-                </Button>
+                <Link to={`/all-posts`}>
+                  <button
+                    onClick={handleShowMore}
+                    className="btn  btn-accent btn-wide my-12"
+                  >
+                    Show more posts
+                  </button>
+                </Link>
               )}
             </>
           ) : (
             <div className="h-screen text-center text-2xl">
               <p> There are no posts yet.</p>
-              <Button
+              <button
                 className="mx-auto mt-5 p-0"
                 onClick={() =>
                   navigate(`${currentUser ? "/create-post" : "/signin"}`)
                 }
               >
                 Create a post
-              </Button>
+              </button>
             </div>
           )}
         </div>

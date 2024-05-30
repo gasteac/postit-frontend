@@ -44,7 +44,7 @@ export const Header = () => {
 
   const handleSignOut = () => {
     try {
-      axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/logout`, { withCredentials: true });
+      axios.post(`/api/user/logout`, { withCredentials: true });
       dispatch(logoutSuccess());
       navigate("/signin");
     } catch (error) {
@@ -57,8 +57,8 @@ export const Header = () => {
         to="/"
         className="lowEndPhone:inline text-sm font-semibold  dark:text-white"
       >
-        <span className="hidden sm:block px-2 py-1 hiText font-bold text-2xl sm:text-2xl ">
-          FaceRook
+        <span className="hidden sm:block px-2 py-1 font-bold text-2xl sm:text-2xl ">
+          POST IT!
         </span>
       </Link>
       {!path.includes("search") && (
@@ -137,11 +137,10 @@ export const Header = () => {
               as="div"
               className={`
     rounded-xl w-full
-    ${
-      path === "/"
-        ? "bg-gradient-to-br from-purple-500 to-blue-500 md:text-white font-semibold"
-        : "dark:text-white light:text-black"
-    }
+    ${path === "/"
+                  ? "bg-gradient-to-br from-purple-500 to-blue-500 md:text-white font-semibold"
+                  : "dark:text-white light:text-black"
+                }
   `}
             >
               <Link to="/" className="w-full flex md:p-2 ">
@@ -153,11 +152,10 @@ export const Header = () => {
               as="div"
               className={`
     rounded-xl w-full
-    ${
-      path === "/all-posts"
-        ? "bg-gradient-to-br from-purple-500 to-blue-500 md:text-white font-semibold"
-        : "dark:text-white light:text-black"
-    }
+    ${path === "/all-posts"
+                  ? "bg-gradient-to-br from-purple-500 to-blue-500 md:text-white font-semibold"
+                  : "dark:text-white light:text-black"
+                }
   `}
             >
               <Link to="/all-posts" className="w-full flex md:p-2">
@@ -169,11 +167,10 @@ export const Header = () => {
               as="div"
               className={`
     rounded-xl w-full
-    ${
-      path === "/create-post"
-        ? "bg-gradient-to-br from-purple-500 to-blue-500 md:text-white font-semibold"
-        : "dark:text-white light:text-black"
-    }
+    ${path === "/create-post"
+                  ? "bg-gradient-to-br from-purple-500 to-blue-500 md:text-white font-semibold"
+                  : "dark:text-white light:text-black"
+                }
   `}
             >
               <Link to="/create-post" className="w-full flex md:p-2">
@@ -185,11 +182,10 @@ export const Header = () => {
               as="div"
               className={`
     rounded-xl w-full md:hidden
-    ${
-      path === "/search"
-        ? "bg-gradient-to-br from-purple-500 to-blue-500 md:text-white font-semibold"
-        : "dark:text-white light:text-black"
-    }
+    ${path === "/search"
+                  ? "bg-gradient-to-br from-purple-500 to-blue-500 md:text-white font-semibold"
+                  : "dark:text-white light:text-black"
+                }
   `}
             >
               <Link to="/search" className="w-full flex md:p-2">
@@ -205,11 +201,10 @@ export const Header = () => {
                 as="div"
                 className={`
     rounded-xl w-full 
-    ${
-      path === "/dashboard"
-        ? "bg-gradient-to-br from-purple-500 to-blue-500 md:text-white font-semibold"
-        : "dark:text-white light:text-black"
-    }
+    ${path === "/dashboard"
+                    ? "bg-gradient-to-br from-purple-500 to-blue-500 md:text-white font-semibold"
+                    : "dark:text-white light:text-black"
+                  }
   `}
               >
                 <Link
@@ -225,11 +220,10 @@ export const Header = () => {
                 as="div"
                 className={`
     rounded-xl w-full 
-    ${
-      path === "/userDashboard"
-        ? "bg-gradient-to-br from-purple-500 to-blue-500 md:text-white font-semibold"
-        : "dark:text-white light:text-black"
-    }
+    ${path === "/userDashboard"
+                    ? "bg-gradient-to-br from-purple-500 to-blue-500 md:text-white font-semibold"
+                    : "dark:text-white light:text-black"
+                  }
   `}
               >
                 <Link
@@ -250,11 +244,10 @@ export const Header = () => {
               as="div"
               className={`
     rounded-xl w-full
-    ${
-      path === "/all-posts"
-        ? "bg-gradient-to-br from-purple-500 to-blue-500 md:text-white font-semibold"
-        : "dark:text-white light:text-black"
-    }
+    ${path === "/all-posts"
+                  ? "bg-gradient-to-br from-purple-500 to-blue-500 md:text-white font-semibold"
+                  : "dark:text-white light:text-black"
+                }
   `}
             >
               <Link to="/all-posts" className="w-full flex md:p-2">
@@ -266,11 +259,10 @@ export const Header = () => {
               as="div"
               className={`
     rounded-xl w-full
-    ${
-      path === "/create-post"
-        ? "bg-gradient-to-br from-purple-500 to-blue-500 md:text-white font-semibold"
-        : "dark:text-white light:text-black"
-    }
+    ${path === "/create-post"
+                  ? "bg-gradient-to-br from-purple-500 to-blue-500 md:text-white font-semibold"
+                  : "dark:text-white light:text-black"
+                }
   `}
             >
               <Link to="/create-post" className="w-full flex md:p-2">

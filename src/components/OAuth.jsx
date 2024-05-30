@@ -28,7 +28,7 @@ export const OAuth = () => {
       //Le avisamos a la store que comenzó el proceso de autenticación
       dispatch(signInStart());
       //Hacemos un post a la ruta de autenticación con Google que creamos en el backend
-      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/google`, {
+      const res = await axios.post(`/api/auth/google`, {
         //Le pasamos los datos que nos devolvió la auth de Google
         //Password y username no se lo pasamos porque lo generamos en el backend
         name: resultFromGoogle.user.displayName,
@@ -51,14 +51,13 @@ export const OAuth = () => {
   };
 
   return (
-    <Button
-      type="button"
-      gradientDuoTone="pinkToOrange"
-      outline
+    <button
+    type="button"
       onClick={handleGoogleClick}
+      className="btn btn-outline btn-accent"
     >
       <AiFillGoogleCircle className="w-6 h-6 mr-2" />
       Continue with Google
-    </Button>
+    </button>
   );
 };

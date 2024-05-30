@@ -1,36 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Button, Spinner } from "flowbite-react";
+import { Spinner } from "flowbite-react";
 import axios from "axios";
 axios.defaults.withCredentials = true;
-import { PostCard } from "../components/PostCard";
-import Tilt from "react-parallax-tilt";
 import { ScrollToTop } from "../components/ScrollToTop";
 
 export const Home = () => {
   // utilizamos useParams() que nos devuelve los parámetros q estan en la URL
   const { postSlug } = useParams();
-  const [recentPosts, setRecentPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    try {
-      const getRecentPosts = async () => {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?limit=9`, { withCredentials: true });
-        if (res.status === 200) {
-          setIsLoading(false);
-          setRecentPosts(res.data.posts);
-        }
-      };
-      getRecentPosts();
-    } catch (error) {
-      setIsLoading(false);
-      console.log(error);
-    }
-  }, [postSlug]);
 
   if (isLoading) {
     return (
@@ -41,7 +22,7 @@ export const Home = () => {
   }
 
   return (
-    <div className="w-screen flex flex-col  items-center justify-center mt-12 min-h-screen ">
+    <div className="h-screen w-screen flex flex-col items-center justify-start mt-12">
       <ScrollToTop />
       <div className="text-4xl lg:text-5xl text-center mb-5">
         {currentUser ? (
@@ -55,29 +36,26 @@ export const Home = () => {
                     : "/userDashboard?tab=profile"
                 )
               }
-              className="hiText capitalize font-bold cursor-pointer hover:brightness-150 transition duration-300 ease-in-out"
+              className="hiText capitalize font-bold tracking-wide cursor-pointer hover:brightness-150 transition duration-300 ease-in-out"
             >
               {currentUser.username}!
             </span>
-
-            <Tilt scale="1.2" perspective="2000">
-              <div
-                onClick={() =>
-                  navigate(
-                    currentUser.isAdmin
-                      ? "/dashboard?tab=profile"
-                      : "/userDashboard?tab=profile"
-                  )
-                }
-                className="h-16 w-16 lg:h-24 lg:w-24 ml-2 cursor-pointer rounded-full overflow-hidden shadow-black shadow-2xl transition duration-300 ease-in-out"
-              >
-                <img
-                  src={currentUser.profilePic}
-                  alt={currentUser.username}
-                  className="object-cover w-full h-full"
-                />
-              </div>
-            </Tilt>
+            <div
+              onClick={() =>
+                navigate(
+                  currentUser.isAdmin
+                    ? "/dashboard?tab=profile"
+                    : "/userDashboard?tab=profile"
+                )
+              }
+              className="h-16 w-16 lg:h-24 lg:w-24 ml-2 cursor-pointer rounded-full overflow-hidden shadow-black shadow-2xl transition duration-300 ease-in-out"
+            >
+              <img
+                src={currentUser.profilePic}
+                alt={currentUser.username}
+                className="object-cover w-full h-full"
+              />
+            </div>
           </div>
         ) : (
           <div className="flex items-center justify-center gap-3 flex-wrap">
@@ -87,23 +65,52 @@ export const Home = () => {
         )}
       </div>
 
-      {recentPosts && (
-        <div className="mt-5 flex flex-wrap items-center justify-center">
-          {recentPosts.map((post) => (
-            <PostCard key={post._id} post={post} />
-          ))}
-        </div>
-      )}
-
-      <Link to={`/all-posts`}>
-        <Button
-          gradientDuoTone="purpleToBlue"
-          outline
-          className="w-full hover:brightness-90 dark:hover:brightness-115 p-1 mb-5 self-center "
+      <div className="flex flex-col gap-4">
+        {currentUser ? ( <><Link
+          to={
+            currentUser.isAdmin
+              ? "/dashboard?tab=profile"
+              : "/userDashboard?tab=profile"
+          }
         >
-          See all posts
-        </Button>
-      </Link>
+          <button
+            className="btn btn-outline btn-primary btn-wide"
+          >
+            My profile
+          </button>
+        </Link>
+      
+        <Link to={`/all-posts`}>
+          <button
+            className="btn btn-outline btn-secondary btn-wide"
+          >
+            See all posts
+          </button>
+        </Link>
+        <Link to={`/create-post`}>
+          <button
+            className="btn btn-outline btn-accent btn-wide"
+          >
+            Create a post
+          </button>
+        </Link>
+        </>) : (<>
+            <Link to={`/all-posts`}>
+              <button
+                className="btn btn-outline btn-secondary btn-wide"
+              >
+                See all posts
+              </button>
+            </Link>
+            <Link to={`/signin`}>
+              <button
+                className="btn btn-outline btn-accent btn-wide"
+              >
+                Sign In
+              </button>
+            </Link>
+        </>)}
+      </div>
     </div>
   );
 };

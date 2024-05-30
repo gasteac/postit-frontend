@@ -10,7 +10,7 @@ export const Comment = ({ comment, onLike, handleDeleteComment }) => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/${comment.userId}`, { withCredentials: true });
+        const res = await axios.get(`/api/user/${comment.userId}`, { withCredentials: true });
         if (res.status !== 200) {
           return;
         }
@@ -43,11 +43,11 @@ export const Comment = ({ comment, onLike, handleDeleteComment }) => {
           </span>
           {currentUser && currentUser._id === comment.userId && (
             <span
-            onClick={() => handleDeleteComment(comment._id, comment.content)}
-            className="text-red-500 text-xs cursor-pointer hover:filter hover:brightness-150"
-          >
-            delete
-          </span>
+              onClick={() => handleDeleteComment(comment._id, comment.content)}
+              className="text-red-500 text-xs cursor-pointer hover:filter hover:brightness-150"
+            >
+              delete
+            </span>
           )
           }
         </div>
@@ -56,19 +56,18 @@ export const Comment = ({ comment, onLike, handleDeleteComment }) => {
           <button
             type="button"
             onClick={() => onLike(comment._id)}
-            className={`text-gray-400 hover:text-blue-500 ${
-              currentUser && comment.likes.includes(currentUser._id)
+            className={`text-gray-400 hover:text-blue-500 ${currentUser && comment.likes.includes(currentUser._id)
                 ? "!text-blue-500"
                 : "text-gray-500"
-            }`}
+              }`}
           >
             <FaThumbsUp />
           </button>
           <p className="text-gray-400 text-xs">
             {comment.numberOfLikes > 0 &&
               comment.numberOfLikes +
-                " " +
-                (comment.numberOfLikes === 1 ? "like" : "likes")}
+              " " +
+              (comment.numberOfLikes === 1 ? "like" : "likes")}
           </p>
         </div>
       </div>

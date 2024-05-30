@@ -18,12 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <PersistGate persistor={persistor}>
     {/* Provider: envuelve a la aplicación y le proporciona acceso a la store de Redux. */}
     <Provider store={store}>
-      {/* ThemeProvider es un componente que envuelve a la aplicación y le proporciona acceso al tema. */}
-      <Flowbite>
-        <div className="bg-[rgb(234,234,234)] text-rgb(16,23,42) dark:bg-gray-900 dark:text-white">
-          <App />
-        </div>
-      </Flowbite>
+      <App />
     </Provider>
   </PersistGate>
 );

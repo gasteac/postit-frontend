@@ -1,49 +1,41 @@
 
-import { Footer } from "flowbite-react";
 import { Link } from "react-router-dom";
-import {BsInstagram, BsLinkedin, BsGithub} from "react-icons/bs";
+import { BsInstagram, BsLinkedin, BsGithub } from "react-icons/bs";
 export const FooterComponent = () => {
   return (
-    <Footer className="h-12 flex justify-center p-4 rounded-none text-black dark:text-white relative bottom-0 shadow-xl ">
+    <footer className="flex bg-base-200 justify-between p-4  text-neutral-content">
       <Link
-        className="hover:underline hidden md:block "
+        className="font-bold"
         target="_blank"
         to="https://gasteac.com"
       >
-        Gasteac
+        GASTEAC
       </Link>
-      <Footer.LinkGroup>
-        <Footer.Link
+      <nav className="flex gap-4 md:justify-self-end">
+        <Link
           className="text-black dark:text-white"
           target="_blank"
           href="https://github.com/gasteac"
         >
-          <Footer.Icon icon={BsGithub} />
-        </Footer.Link>
+          <BsGithub size={20} />
+        </Link>
 
-        <Footer.Link
+        <Link
           className="text-black dark:text-white"
           target="_blank"
           href="https://www.linkedin.com/in/gasteac/"
         >
-          <Footer.Icon icon={BsLinkedin} />
-        </Footer.Link>
+          <BsLinkedin size={20} />
+        </Link>
 
-        <Footer.Link
+        <Link
           className="text-black dark:text-white"
           target="_blank"
           href="https://www.instagram.com/gasteac/"
         >
-          <Footer.Icon icon={BsInstagram} />
-        </Footer.Link>
-        <Footer.Link
-          className="text-black dark:text-white"
-          target="_blank"
-          href="https://gasteac.com"
-        >
-          Portfolio
-        </Footer.Link>
-      </Footer.LinkGroup>
-    </Footer>
+          <BsInstagram size={20}/>
+        </Link>
+      </nav>
+    </footer>
   );
 };

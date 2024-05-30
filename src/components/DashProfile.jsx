@@ -38,7 +38,7 @@ import { set } from "mongoose";
 export const DashProfile = () => {
   const storage = getStorage(app);
   const dispatch = useDispatch();
-const navigate = useNavigate();
+  const navigate = useNavigate();
   // showModal es un estado local que nos permite mostrar un modal al usuario
   const [showModal, setShowModal] = useState(false);
   // isLoading es una propiedad del estado global que nos dice si la petición de registro/login está en curso.
@@ -143,12 +143,12 @@ const navigate = useNavigate();
             //Reseteo el estado de subida de la imagen
             setImageFileUploading(false);
             //Elimino la imagen anterior de firebase
-            axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/user/update/${currentUser._id}`, {
-                ...currentUser,
-                username: currentUser.username,
-                email: currentUser.email,
-                password: "",
-                profilePic: downloadURL,
+            axios.put(`/api/user/update/${currentUser._id}`, {
+              ...currentUser,
+              username: currentUser.username,
+              email: currentUser.email,
+              password: "",
+              profilePic: downloadURL,
             }, { withCredentials: true })
               .then((response) => {
                 if (response.status === 200) {
@@ -172,12 +172,12 @@ const navigate = useNavigate();
     );
   };
   const handleDeleteImage = async (downloadURL) => {
-     if (!oldImageUser.includes("firebase")) {
+    if (!oldImageUser.includes("firebase")) {
       return setOldImageUser(downloadURL);
-     }
+    }
     const fileRef = ref(storage, oldImageUser);
     setOldImageUser(downloadURL);
-   
+
     try {
       await deleteObject(fileRef);
       setImageFile(null);
@@ -222,7 +222,7 @@ const navigate = useNavigate();
         // Cuando el usuario envía el formulario, se dispara la acción SignUpStart, que cambia el estado isLoading a true.
         dispatch(modifyUserStart());
         // Hacemos una petición POST a la ruta /api/auth/signup con los datos del formulario. (trim saca los espacios en blanco al principio y al final de un string)
-        const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/user/update/${currentUser._id}`, {
+        const res = await axios.put(`/api/user/update/${currentUser._id}`, {
           ...currentUser,
           username: username,
           email: email,
@@ -240,7 +240,7 @@ const navigate = useNavigate();
         if (message.includes("duplicate")) {
           setUpdateUserError("Email or Username already in use");
         }
-      
+
         // Si la petición falla, se dispara la acción SignUpFailure, que cambia el estado isLoading a false y muestra un mensaje de error al usuario.
         dispatch(modifyUserFailure());
         setUpdateUserSuccess(false);
@@ -251,7 +251,7 @@ const navigate = useNavigate();
   const deleteUser = async () => {
     setShowModal(false);
     try {
-      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/user/delete/${currentUser._id}`, { withCredentials: true });
+      await axios.delete(`/api/user/delete/${currentUser._id}`, { withCredentials: true });
       dispatch(deleteUserSuccess());
       localStorage.removeItem("persist:root");
     } catch (error) {
@@ -261,7 +261,7 @@ const navigate = useNavigate();
 
   const handleSignOut = () => {
     try {
-      axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/logout`, { withCredentials: true });
+      axios.post(`/api/user/logout`, { withCredentials: true });
       dispatch(logoutSuccess());
       navigate("/signin");
     } catch (error) {
@@ -314,9 +314,8 @@ const navigate = useNavigate();
                     fontWeight: "bold",
                   },
                   path: {
-                    stroke: `rgba(62, 231, 153, ${
-                      imageFileUploadProgress / 100
-                    })`,
+                    stroke: `rgba(62, 231, 153, ${imageFileUploadProgress / 100
+                      })`,
                   },
                 }}
               />
@@ -356,7 +355,7 @@ const navigate = useNavigate();
                 {formik.errors.username}
               </h6>
             ) : null}
-          
+
           </div>
 
           <div className="group">
@@ -376,7 +375,7 @@ const navigate = useNavigate();
                 {formik.errors.email}
               </h6>
             ) : null}
-          
+
           </div>
 
           <div className="group">

@@ -25,7 +25,7 @@ export const DashPosts = () => {
       try {
         setLoading(true);
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?userId=${currentUser._id}&limit=4`, { withCredentials: true }
+          `/api/post/getposts?userId=${currentUser._id}&limit=4`, { withCredentials: true }
         );
         const { data } = res;
         if (res.status === 200) {
@@ -46,7 +46,7 @@ export const DashPosts = () => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `${import.meta.env.VITE_BACKEND_URL}/api/post/deletepost/${postIdtoDelete}/${currentUser._id}`, { withCredentials: true }
+        `/api/post/deletepost/${postIdtoDelete}/${currentUser._id}`, { withCredentials: true }
       );
 
       if (response.status === 200) {
@@ -69,7 +69,7 @@ export const DashPosts = () => {
   useEffect(() => {
     const fetchTotalPosts = async () => {
       const res1 = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?userId=${currentUser._id}`, { withCredentials: true }
+        `/api/post/getposts?userId=${currentUser._id}`, { withCredentials: true }
       );
       const { data } = res1;
       const { totalPosts: totalPosts2 } = data;
@@ -85,7 +85,7 @@ export const DashPosts = () => {
     const numberOfPosts = userPosts.length; //4
     const startIndex = numberOfPosts; // 4
     const response = await axios.get(
-      `${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`, { withCredentials: true }
+      `/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`, { withCredentials: true }
     );
     const data = response?.data;
     if (response.status !== 200) {
@@ -183,8 +183,8 @@ export const DashPosts = () => {
           </Table>
           {showMore && (
             <Button
-            gradientDuoTone="purpleToBlue"
-            outline
+              gradientDuoTone="purpleToBlue"
+              outline
               onClick={handleShowMore}
               className="hover:brightness-90 dark:hover:brightness-115 p-1 my-5 self-center mx-auto"
             >

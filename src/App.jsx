@@ -15,6 +15,7 @@ import { AdminRoute } from "./components/AdminRoute";
 // ScrollToTop es un componente que se encarga de que cuando cambiamos de ruta, la página se muestre desde arriba
 import { ScrollToTop } from "./components/ScrollToTop";
 import { FooterComponent } from "./components/Footer";
+import  {Navbar}  from "./components/Navbar";
 
 export const App = () => {
   return (
@@ -25,7 +26,8 @@ export const App = () => {
         {/* Componente para que si nos movemos a otra ruta, la página se muestre desde arriba (osea sube el scroll arriba) */}
         <ScrollToTop />
         {/* aca va el header, que es el único componente que se va a ver siempre */}
-        <Header />
+        {/* <Header /> */}
+       <Navbar/>
         <Routes className="bg-black">
           {/* si pongo una ruta mal me redirige a home con el *   */}
           <Route

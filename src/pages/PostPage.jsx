@@ -29,7 +29,7 @@ export const PostPage = () => {
   useEffect(() => {
     try {
       const getRecentPosts = async () => {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?limit=4`, { withCredentials: true });
+        const res = await axios.get(`/api/post/getposts?limit=4`, { withCredentials: true });
         if (res.status === 200) {
           setRecentPosts(res.data.posts);
           setRecentPosts((prev) =>
@@ -47,7 +47,7 @@ export const PostPage = () => {
     try {
       const getPostBySlug = async () => {
         setIsLoading(true);
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?slug=${postSlug}`, { withCredentials: true });
+        const res = await axios.get(`/api/post/getposts?slug=${postSlug}`, { withCredentials: true });
         if (res.status === 200) {
           setIsLoading(false);
           setPost(res.data.posts[0]);
@@ -69,7 +69,7 @@ export const PostPage = () => {
     try {
       console.log(postIdtoDelete, currentUser._id);
       const response = await axios.delete(
-        `${import.meta.env.VITE_BACKEND_URL}/api/post/deletepost/${postIdtoDelete}/${postOwnerId}`, { withCredentials: true }
+        `/api/post/deletepost/${postIdtoDelete}/${postOwnerId}`, { withCredentials: true }
       );
       if (response.status === 200) {
         navigate(
@@ -92,13 +92,13 @@ export const PostPage = () => {
     }
   };
 
-    if (isLoading) {
-      return (
-        <div className="flex items-center justify-center mt-12 min-h-screen">
-          <Spinner size="xl" />
-        </div>
-      );
-    }
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center mt-12 min-h-screen">
+        <Spinner size="xl" />
+      </div>
+    );
+  }
   return (
     <>
       <ScrollToTop />
@@ -140,37 +140,26 @@ export const PostPage = () => {
               </div>
             </Tilt>
             {(currentUser?.isAdmin || postOwnerId === currentUser?._id) && (
-              <div className="flex mt-5 gap-5 px-4 justify-evenly align-middle items-center">
-                <Link className="flex-1" to={`/update-post/${post._id}`}>
-                  <Button
-                    gradientDuoTone="purpleToBlue"
-                    className="w-full hover:brightness-90 dark:hover:brightness-115 p-1  self-center "
-                  >
-                    Edit post
-                  </Button>
-                </Link>
-                <Button
-                  onClick={() => {
-                    setShowModal(true);
-                    setPostIdtoDelete(post._id);
-                    setPostTitletoDelete(post.title);
-                    setImageToDelete(
-                      post.image.includes(
-                        "video-tutoriales-sobre-email-marketing"
-                      )
-                        ? null
-                        : post.image
-                    );
-                  }}
-                  gradientDuoTone="purpleToPink"
-                  className="flex-1 hover:brightness-90 dark:hover:brightness-115 p-1  self-center "
-                >
-                  Delete post
-                </Button>
-              </div>
+              <ul className="menu menu-vertical lg:menu-horizontal flex items-center justify-center bg-base-200 gap-4 rounded-box md:justify-evenly mt-5 font-bold">
+                <li><Link className="text-center" to={`/update-post/${post._id}`}>Edit post </Link></li>
+                <li><a onClick={() => {
+                  setShowModal(true);
+                  setPostIdtoDelete(post._id);
+                  setPostTitletoDelete(post.title);
+                  setImageToDelete(
+                    post.image.includes(
+                      "video-tutoriales-sobre-email-marketing"
+                    )
+                      ? null
+                      : post.image
+                  );
+                }}
+                  className="text-center"
+                >Delete post</a></li>
+              </ul>
             )}
 
-            <div className="mt-5 mb-5 w-[90%] self-center bg-gray-300 rounded-xl dark:bg-slate-800 p-6">
+            <div className="mt-5 mb-5 self-center rounded-xl dark:bg-base-300 p-6">
               <p>{post && post.content}</p>
             </div>
             <div className="self-center w-[90%] flex items-center justify-center">
@@ -189,13 +178,11 @@ export const PostPage = () => {
               </div>
             )}
             <Link to={`/all-posts`}>
-              <Button
-                gradientDuoTone="purpleToBlue"
-                outline
-                className="w-full hover:brightness-90 dark:hover:brightness-115 p-1 mb-5 self-center "
+              <button
+                className="btn  btn-accent btn-wide my-12"
               >
-                See all posts
-              </Button>
+                Show more posts
+              </button>
             </Link>
             <Modal
               show={showModal}

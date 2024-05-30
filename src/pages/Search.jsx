@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { SearchBar } from "../components/SearchBar";
 import { SearchResults } from "../components/SearchResults";
 import axios from "axios";
@@ -42,8 +42,7 @@ export const Search = () => {
         setIsLoading(true);
         // obtenemos la consulta desde searchParams
         const searchQuery = searchParams.toString();
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?${searchQuery}&limit=6`, { withCredentials: true });
-
+        const res = await axios.get(`/api/post/getposts?${searchQuery}&limit=8`, { withCredentials: true });
         if (res.status !== 200) {
           setIsLoading(false);
           return;
@@ -51,7 +50,7 @@ export const Search = () => {
         if (res.status === 200) {
           setIsLoading(false);
           setSearchedPosts(res.data.posts);
-          if (res.data.posts.length === 6) {
+          if (res.data.posts.length === 8) {
             setShowMore(true);
           } else {
             setShowMore(false);
@@ -70,7 +69,7 @@ export const Search = () => {
     const urlParams = new URLSearchParams(location.search);
     urlParams.set("startIndex", startIndex);
     const searchQuery = urlParams.toString();
-    const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?${searchQuery}&limit=6`, { withCredentials: true });
+    const res = await axios.get(`/api/post/getposts?${searchQuery}&limit=6`, { withCredentials: true });
     if (res.status !== 200) {
       return;
     }
@@ -103,7 +102,7 @@ export const Search = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="w-screen flex flex-col items-center justify-start mt-12 min-h-screen">
       <ScrollToTop />
       <SearchBar
         setSearchData={setSearchData}
@@ -113,14 +112,14 @@ export const Search = () => {
 
       <SearchResults isLoading={isLoading} searchedPosts={searchedPosts} />
       {showMore && (
-        <Button
-          gradientDuoTone="purpleToBlue"
-          outline
-          onClick={handleShowMore}
-          className="hover:brightness-90 dark:hover:brightness-115 p-1 my-5 self-center mx-auto"
-        >
-          Show more
-        </Button>
+        <Link to={`/all-posts`}>
+          <button
+            onClick={handleShowMore}
+            className="btn  btn-accent btn-wide my-12"
+          >
+            Show more posts
+          </button>
+        </Link>
       )}
     </div>
   );

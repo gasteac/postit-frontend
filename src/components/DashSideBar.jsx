@@ -41,7 +41,7 @@ export const DashSideBar = () => {
   }, [location.search]);
   const handleSignOut = () => {
     try {
-      axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/logout`, { withCredentials: true });
+      axios.post(`/api/user/logout`, { withCredentials: true });
       dispatch(logoutSuccess());
     } catch (error) {
       console.log(error);
@@ -107,8 +107,8 @@ export const DashSideBar = () => {
       },
     },
   };
-   
- 
+
+
   return (
     <Flowbite theme={{ theme: customTheme }}>
       <Sidebar className=" w-screen p-2 md:p-0 md:w-56  z-40">

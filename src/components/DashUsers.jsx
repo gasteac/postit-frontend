@@ -5,7 +5,7 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 import { Button, Modal, Spinner, Table } from "flowbite-react";
 import { deleteObject, getStorage, ref } from "firebase/storage";
-import {FaCheck, FaTimes} from "react-icons/fa";
+import { FaCheck, FaTimes } from "react-icons/fa";
 export const DashUsers = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [users, setUsers] = useState([]);
@@ -21,9 +21,9 @@ export const DashUsers = () => {
   const handleShowMore = async () => {
     const startIndex = users.length;
     try {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/getusers?startIndex=${startIndex}`, { withCredentials: true });
+      const res = await axios.get(`/api/user/getusers?startIndex=${startIndex}`, { withCredentials: true });
       if (res.statusText === "OK") {
-          setUsers([...users, ...res.data.users]);
+        setUsers([...users, ...res.data.users]);
         if (res.data.users.length < 4) {
           setShowMore(false);
         }
@@ -33,34 +33,34 @@ export const DashUsers = () => {
     }
   };
 
-    const handleDelete = async () => {
-      try {
-        const response = await axios.delete(
-          `${import.meta.env.VITE_BACKEND_URL}/api/user/deleteuser/${userIdtoDelete}`, { withCredentials: true }
-        );
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(
+        `/api/user/deleteuser/${userIdtoDelete}`, { withCredentials: true }
+      );
 
-        if (response.status === 200) {
-          setUsers(users.filter((user) => user._id !== userIdtoDelete));
-          // Crear una referencia no raíz utilizando child
-          const fileRef = ref(storage, imageToDelete);
-          if (imageToDelete === null) {
-            return;
-          } else {
-            // Eliminar el archivo utilizando la referencia no raíz
-            await deleteObject(fileRef);
-          }
+      if (response.status === 200) {
+        setUsers(users.filter((user) => user._id !== userIdtoDelete));
+        // Crear una referencia no raíz utilizando child
+        const fileRef = ref(storage, imageToDelete);
+        if (imageToDelete === null) {
+          return;
+        } else {
+          // Eliminar el archivo utilizando la referencia no raíz
+          await deleteObject(fileRef);
         }
-      } catch (error) {
-        console.log(error);
-        // Manejar el error de forma adecuada
       }
-    };
+    } catch (error) {
+      console.log(error);
+      // Manejar el error de forma adecuada
+    }
+  };
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/getusers`, { withCredentials: true });
+        const res = await axios.get(`/api/user/getusers`, { withCredentials: true });
 
         const { data } = res;
         if (res.status === 200) {
@@ -79,13 +79,13 @@ export const DashUsers = () => {
       fetchUsers();
     }
   }, [currentUser._id]);
-if (loading) {
-  return (
-    <div className="flex h-screen w-full items-start justify-center mt-12">
-      <Spinner size="xl" />
-    </div>
-  );
-}
+  if (loading) {
+    return (
+      <div className="flex h-screen w-full items-start justify-center mt-12">
+        <Spinner size="xl" />
+      </div>
+    );
+  }
   return (
     <div className="p-2 md:p-6 table-auto overflow-x-scroll md:mx-auto scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-transparent dark:scrollbar-thumb-transparent">
       {currentUser.isAdmin && users.length > 0 ? (

@@ -45,14 +45,15 @@ export const UpdatePost = () => {
   const [postOwnerId, setPostOwnerId] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [postIdtoDelete, setPostIdtoDelete] = useState("");
+  const [postSlug, setPostSlug] = useState("");
   const [postTitletoDelete, setPostTitletoDelete] = useState("");
   const [imageToDelete, setImageToDelete] = useState(null);
 
-const handleDelete = async () => {
+  const handleDelete = async () => {
     try {
       console.log(postIdtoDelete, currentUser._id);
       const response = await axios.delete(
-        `${import.meta.env.VITE_BACKEND_URL}/api/post/deletepost/${postIdtoDelete}/${postOwnerId}`, { withCredentials: true }
+        `/api/post/deletepost/${postIdtoDelete}/${postOwnerId}`, { withCredentials: true }
       );
       if (response.status === 200) {
         navigate(
@@ -72,12 +73,13 @@ const handleDelete = async () => {
     } catch (error) {
       console.log(error);
       // Manejar el error de forma adecuada
-    }}
+    }
+  }
 
   useEffect(() => {
     try {
       const getPostById = async () => {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?postId=${postId}`, { withCredentials: true });
+        const res = await axios.get(`/api/post/getposts?postId=${postId}`, { withCredentials: true });
         if (res.status !== 200) setUpdatePostError(res.data.message);
         if (res.status === 200) {
           setPostData(res.data.posts[0]);
@@ -148,7 +150,7 @@ const handleDelete = async () => {
           setImageFileUploading(false);
           setUploadImgError(null);
           axios
-            .put(`${import.meta.env.VITE_BACKEND_URL}/api/post/updatepost/${postId}/${postOwnerId}`, {
+            .put(`/api/post/updatepost/${postId}/${postOwnerId}`, {
               title,
               content,
               category,
@@ -161,15 +163,8 @@ const handleDelete = async () => {
                 handleDeleteImage();
                 setTimeout(() => {
                   setUploadPostSuccess(null);
-                  navigate(
-                    currentUser.isAdmin
-                      ? "/dashboard?tab=posts"
-                      : "/userDashboard?tab=posts"
-                  );
+                  navigate(`/post/${postSlug}`);
                 }, 2000);
-
-                // setImageFileUploadProgress(null);
-                // setImageFileUploading(false);
               }
             })
             .catch((error) => {
@@ -216,7 +211,7 @@ const handleDelete = async () => {
         }
 
         const postSaved = await axios.put(
-          `${import.meta.env.VITE_BACKEND_URL}/api/post/updatepost/${postId}/${postOwnerId}`,
+          `/api/post/updatepost/${postId}/${postOwnerId}`,
           {
             title,
             content,
@@ -246,7 +241,7 @@ const handleDelete = async () => {
   useEffect(() => {
     try {
       const getPostById = async () => {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?postId=${postId}`, { withCredentials: true });
+        const res = await axios.get(`/api/post/getposts?postId=${postId}`, { withCredentials: true });
         if (res.status !== 200) setUpdatePostError(res.data.message);
         if (res.status === 200) {
           setPostData(res.data.posts[0]);
@@ -266,21 +261,23 @@ const handleDelete = async () => {
   return (
     <div className="p-3 mt-10 max-w-3xl mx-auto min-h-screen">
       <ScrollToTop />
+      <h1 className="font-bold text-xl hiText lg:text-3xl text-center tracking-wide">
+        Update post
+      </h1>
+      <h1 className="font-bold text-4xl  lg:text-5xl text-center mb-12 tracking-wide">
+        {postData.title}
+      </h1>
       {updatePostError && (
-        <Alert
-          color="failure"
-          className="mb-4 font-semibold h-1 text-clip flex items-center justify-center"
-        >
+        <div role="alert" className="alert alert-error mb-5">
+          <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
           {updatePostError}
-        </Alert>
+        </div>
       )}
       {uploadPostSuccess && (
-        <Alert
-          color="success"
-          className="mb-4 font-semibold h-1 text-clip flex items-center justify-center"
-        >
-          Post updated successfully!
-        </Alert>
+        <div role="alert" className="alert alert-success mb-5">
+          <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          <span>Post updated successfully!</span>
+        </div>
       )}
       <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
         {formik.touched.title && formik.errors.title ? (
@@ -289,20 +286,21 @@ const handleDelete = async () => {
           </h6>
         ) : null}
         <div className="flex sm:flex-row justify-between gap-4">
-          <TextInput
+          <input
             value={formik.values.title}
             type="text"
             placeholder="Title"
-            className="flex-1"
+            className="input input-bordered w-full md:flex-1"
             id="title"
             name="title"
             onChange={(e) => {
               formik.handleChange(e);
             }}
           />
-          <Select
+          <select
             id="category"
             name="category"
+            className="select select-bordered"
             value={formik.values.category}
             onChange={(e) => {
               formik.handleChange(e);
@@ -335,23 +333,25 @@ const handleDelete = async () => {
             <option value="games-videogames">Games & Videogames</option>
             <option value="news-current-events">News & Current Events</option>
             <option value="other">Other...</option>
-          </Select>
+          </select>
         </div>
-        <div className="flex items-center gap-4 justify-between border-2 border-teal-400 border-dashed p-3">
-          <FileInput
+        <div className="flex items-center gap-4 justify-between my-2">
+          <input
+            // value={postUploadSuccess ? 'Image uploaded successfully!' : 'Upload Image'}
             disabled={imageFileUploading}
             type="file"
             accept="image/*"
+            className="file-input file-input-bordered w-full md:flex-1"
             onChange={(e) => handleImageChange(e)}
           />
         </div>
         {imageFileUploadProgress && (
-          <Progress progress={imageFileUploadProgress} />
+          <progress className="progress" value={imageFileUploadProgress} max="100"></progress>
         )}
         {uploadImgError
           ? (setTimeout(() => {
-              setUploadImgError(null);
-            }, 4500),
+            setUploadImgError(null);
+          }, 4500),
             (
               <Alert
                 color="failure"
@@ -361,20 +361,20 @@ const handleDelete = async () => {
               </Alert>
             ))
           : (postData.image || imageFileUrl) && (
-              <img
-                src={imageFileUrl ? imageFileUrl : postData.image}
-                alt="Post"
-                className="w-full h-32 object-cover rounded-lg shadow-lg"
-              />
-            )}
+            <img
+              src={imageFileUrl ? imageFileUrl : postData.image}
+              alt="Post"
+              className="w-full h-32 object-cover rounded-lg shadow-lg"
+            />
+          )}
         {formik.touched.content && formik.errors.content ? (
           <h6 className="ml-2 text-red-300 text-[0.8rem]  phone:text-[1rem] tablet:text-[1.2rem]">
             {formik.errors.content}
           </h6>
         ) : null}
-        <Textarea
+        <textarea
           placeholder="Write something"
-          className="h-32 resize-none"
+          className="textarea textarea-bordered textarea-lg w-full h-52 resize-none"
           id="content"
           name="content"
           value={formik.values.content}
@@ -382,12 +382,21 @@ const handleDelete = async () => {
             formik.handleChange(e);
           }}
         />
-        <div className="flex  gap-5 px-4 justify-evenly align-middle items-center">
-          <Button
-            className="text-nowrap hover:brightness-90 dark:hover:brightness-115 p-1 self-center "
+        <div className="flex  gap-5 justify-evenly align-middle items-center">
+        
+          <button
+            type="submit"
+            className="btn btn-active btn-succes flex-1"
+            disabled={imageFileUploading}
+            onClick={()=>{setPostSlug(postData.slug)}}
+          >
+           Update Post
+          </button>
+          <button
+            className="btn btn-error flex-1"
             type="button"
-            gradientDuoTone="purpleToPink"
-            size="lg"
+
+
             onClick={() => {
               setShowModal(true);
               setPostIdtoDelete(postData._id);
@@ -402,16 +411,7 @@ const handleDelete = async () => {
             }}
           >
             Delete Post
-          </Button>
-          <Button
-            type="submit"
-            gradientDuoTone="purpleToBlue"
-            size="lg"
-            disabled={imageFileUploading}
-            className="w-full hover:brightness-90 dark:hover:brightness-115 p-1  self-center "
-          >
-            Update Post
-          </Button>
+          </button>
         </div>
       </form>
       <Modal

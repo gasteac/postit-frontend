@@ -108,7 +108,7 @@ export const CreatePost = () => {
           setImageFileUploading(false);
           setUploadImgError(null);
           axios
-            .post(`${import.meta.env.VITE_BACKEND_URL}/api/post/create`, {
+            .post(`/api/post/create`, {
               title,
               content,
               category,
@@ -120,7 +120,7 @@ export const CreatePost = () => {
                 setUploadPostError(null);
                 setPostUploadSuccess(null);
                 navigate(`/post/${response.data.slug}`);
-               
+
               }
             })
             .catch((error) => {
@@ -153,7 +153,7 @@ export const CreatePost = () => {
         if (imageFile) {
           return uploadImage(title, content, category);
         }
-        const postSaved = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/post/create`, {
+        const postSaved = await axios.post(`/api/post/create`, {
           title,
           content,
           category,
@@ -189,8 +189,8 @@ export const CreatePost = () => {
     <>
       <ScrollToTop />
       {!currentUser ? (
-        <div className="min-h-screen w-screen flex flex-col gap-5 items-center justify-start mt-12">
-          <h1 className="text-5xl mb-2 text-center">
+        <div className="h-screen w-screen flex flex-col gap-5 items-center justify-start mt-12">
+          <h1 className="text-4xl lg:text-5xl text-center mb-5">
             <span className="hiText capitalize font-bold">ERROR</span>
           </h1>
 
@@ -219,25 +219,21 @@ export const CreatePost = () => {
           )}
         </div>
       ) : (
-        <div className="min-h-screen  p-3 max-w-3xl mx-auto">
-          <h1 className="text-center text-3xl font-semibold my-7">
-            Create a post
+        <div className="min-h-screen mt-12 p-3 max-w-3xl mx-auto ">
+          <h1 className="font-bold text-4xl hiText lg:text-5xl text-center mb-12 tracking-wide">
+            Create a Post!
           </h1>
           {uploadPostError && (
-            <Alert
-              color="failure"
-              className="mb-4 font-semibold h-1 text-clip flex items-center justify-center"
-            >
-              Error: Duplicated title
-            </Alert>
+            <div role="alert" className="alert alert-error mb-5">
+              <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span>Error: Duplicated title</span>
+            </div>
           )}
           {postUploadSuccess && (
-            <Alert
-              color="success"
-              className="mb-4 font-semibold h-1 text-clip flex items-center justify-center"
-            >
-              Post created successfully!
-            </Alert>
+            <div role="alert" className="alert alert-success">
+              <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span>Post created successfully!</span>
+            </div>
           )}
           <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
             {formik.touched.title && formik.errors.title ? (
@@ -246,20 +242,21 @@ export const CreatePost = () => {
               </h6>
             ) : null}
             <div className="flex flex-col sm:flex-row justify-between gap-4">
-              <TextInput
+              <input
                 value={formik.values.title}
                 type="text"
                 placeholder="Title"
-                className="flex-1"
+                className="input input-bordered w-full md:flex-1"
                 id="title"
                 name="title"
                 onChange={(e) => {
                   formik.handleChange(e);
                 }}
               />
-              <Select
+              <select
                 id="category"
                 name="category"
+                className="select select-bordered"
                 value={formik.values.category}
                 onChange={(e) => {
                   formik.handleChange(e);
@@ -302,24 +299,25 @@ export const CreatePost = () => {
                   News & Current Events
                 </option>
                 <option value="other">Other...</option>
-              </Select>
+              </select>
             </div>
-            <div className="flex items-center gap-4 justify-between border-2 border-teal-400 border-dashed p-3">
-              <FileInput
+            <div className="flex items-center gap-4 justify-between my-2">
+              <input
                 // value={postUploadSuccess ? 'Image uploaded successfully!' : 'Upload Image'}
                 disabled={imageFileUploading}
                 type="file"
                 accept="image/*"
+                className="file-input file-input-bordered w-full md:flex-1"
                 onChange={(e) => handleImageChange(e)}
               />
             </div>
             {imageFileUploadProgress && (
-              <Progress progress={imageFileUploadProgress} />
+              <progress className="progress" value={imageFileUploadProgress} max="100"></progress>
             )}
             {uploadImgError
               ? (setTimeout(() => {
-                  setUploadImgError(null);
-                }, 4500),
+                setUploadImgError(null);
+              }, 4500),
                 (
                   <Alert
                     color="failure"
@@ -329,22 +327,22 @@ export const CreatePost = () => {
                   </Alert>
                 ))
               : imageFileUrl && (
-                  <div className="max-w-full h-32 hover:h-52 overflow-y-scroll transition-all duration-30 ease-in-out">
-                    <img
-                      src={imageFileUrl}
-                      alt="Post"
-                      className="w-full object-cover "
-                    />
-                  </div>
-                )}
+                <div className="max-w-full h-32 hover:h-52 overflow-y-scroll transition-all duration-30 ease-in-out">
+                  <img
+                    src={imageFileUrl}
+                    alt="Post"
+                    className="w-full object-cover "
+                  />
+                </div>
+              )}
             {formik.touched.content && formik.errors.content ? (
               <h6 className="ml-2 text-red-300 text-[0.8rem]  phone:text-[1rem] tablet:text-[1.2rem]">
                 {formik.errors.content}
               </h6>
             ) : null}
-            <Textarea
+            <textarea
               placeholder="Write something"
-              className="h-32 resize-none"
+              className="textarea textarea-bordered textarea-lg w-full h-52 resize-none"
               id="content"
               name="content"
               value={formik.values.content}
@@ -352,14 +350,13 @@ export const CreatePost = () => {
                 formik.handleChange(e);
               }}
             />
-            <Button
+            <button
               type="submit"
-              gradientDuoTone="purpleToBlue"
-              size="lg"
+              className="btn btn-active btn-succes"
               disabled={imageFileUploading}
             >
               Create Post
-            </Button>
+            </button>
           </form>
         </div>
       )}
