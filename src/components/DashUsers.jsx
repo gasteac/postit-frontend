@@ -24,7 +24,7 @@ export const DashUsers = () => {
       const res = await axios.get(`/api/user/getusers?startIndex=${startIndex}`, { withCredentials: true });
       if (res.statusText === "OK") {
         setUsers([...users, ...res.data.users]);
-        if (res.data.users.length < 4) {
+        if (res.data.users.length < 17) {
           setShowMore(false);
         }
       }
@@ -66,7 +66,7 @@ export const DashUsers = () => {
         if (res.status === 200) {
           setUsers(data.users);
           setLoading(false);
-          if (data.users.length < 4) {
+          if (data.users.length < 16) {
             setShowMore(false);
           }
         }
@@ -87,79 +87,84 @@ export const DashUsers = () => {
     );
   }
   return (
-    <div className="p-2 md:p-6 table-auto overflow-x-scroll md:mx-auto scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-transparent dark:scrollbar-thumb-transparent">
+    <div className="p-2 md:p-6 overflow-x-scroll md:mx-auto scrollbar">
       {currentUser.isAdmin && users.length > 0 ? (
         <>
-          <Table hoverable className="bg-white dark:bg-slate-800 rounded-xl">
-            <Table.Head>
-              <Table.HeadCell className="text-nowrap">
-                date created
-              </Table.HeadCell>
-              <Table.HeadCell className="text-nowrap">
-                user image
-              </Table.HeadCell>
-              <Table.HeadCell className="text-nowrap">username</Table.HeadCell>
-              <Table.HeadCell className="text-nowrap">email</Table.HeadCell>
-              <Table.HeadCell>admin</Table.HeadCell>
-              <Table.HeadCell>Delete</Table.HeadCell>
-            </Table.Head>
-            {users?.map((user) => (
-              <Table.Body key={user._id} className="divide-y-2">
-                <Table.Row>
-                  <Table.Cell as="div">
-                    {new Date(user.updatedAt).toLocaleDateString()}
-                  </Table.Cell>
-                  <Table.Cell>
-                    <img
-                      src={user.profilePic}
-                      alt={user.username}
-                      className=" h-24 w-24 object-cover  rounded-lg"
-                    />
-                  </Table.Cell>
-                  <Table.Cell className="font-medium ">
-                    {user.username}
-                  </Table.Cell>
-                  <Table.Cell className="font-medium">{user.email}</Table.Cell>
-                  <Table.Cell className="font-medium">
-                    {user.isAdmin ? (
-                      <FaCheck className="text-emerald-500" />
-                    ) : (
-                      <FaTimes className="text-red-500" />
-                    )}
-                  </Table.Cell>
-                  <Table.Cell>
-                    <span
-                      onClick={() => {
-                        setShowModal(true);
-                        setUserIdtoDelete(user._id);
-                        setUsertoDelete(user.username);
-                        setUserPic(user.profilePic);
-                        setImageToDelete(
-                          user.profilePic.includes(
-                            "video-tutoriales-sobre-email-marketing"
-                          )
-                            ? null
-                            : user.profilePic
-                        );
-                      }}
-                      className="cursor-pointer text-red-500 font-medium hover:underline"
-                    >
-                      Delete
-                    </span>
-                  </Table.Cell>
-                </Table.Row>
-              </Table.Body>
-            ))}
-          </Table>
+          <div className="overflow-x-auto">
+            <table className="table">
+              {/* head */}
+              <thead>
+                <tr>
+                 
+                  <th>Image</th>
+                  <th>Admin?</th>
+                  <th>Date</th>
+                  <th>Delete</th>
+               
+                  <th></th>
+                </tr>
+              </thead>
+              {users?.map((user) => (
+              <tbody>
+                {/* row 1 */}
+                <tr>
+                  
+                  <td>
+                    <div className="flex items-center gap-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle w-12 h-12">
+                            <img src={user.profilePic}
+                              alt={user.username} />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="font-bold">{user.username}</div>
+                        <div className="text-sm opacity-50">{user.email}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                      {user.isAdmin ? (
+                        <FaCheck className="text-emerald-500" />
+                      ) : (
+                        <FaTimes className="text-red-500" />
+                      )}
+                  </td>
+                    <td> {new Date(user.updatedAt).toLocaleDateString()}</td>
+                  <th>
+                      <span
+                        onClick={() => {
+                          document.getElementById('deleteUserByAdmin').showModal();
+                          setUserIdtoDelete(user._id);
+                          setUsertoDelete(user.username);
+                          setUserPic(user.profilePic);
+                          setImageToDelete(
+                            user.profilePic.includes(
+                              "video-tutoriales-sobre-email-marketing"
+                            )
+                              ? null
+                              : user.profilePic
+                          );
+                        }}
+                        className="cursor-pointer text-red-500 font-medium hover:underline"
+                      >
+                        Delete
+                      </span>
+                  </th>
+                </tr>
+               
+                
+              </tbody>
+              ))}
+            </table>
+          </div>
+          
           {showMore && (
-            <Button
-              gradientDuoTone="purpleToBlue"
-              outline
+            <button
               onClick={handleShowMore}
-              className="mx-auto hover:brightness-90 dark:hover:brightness-115 p-1 my-5 self-center "
-            >
+              className="btn btn-neutral my-5 w-full"            >
               Show more
-            </Button>
+            </button>
           )}
         </>
       ) : (
@@ -167,38 +172,24 @@ export const DashUsers = () => {
           There are no users yet
         </div>
       )}
-      <Modal
-        show={showModal}
-        onClose={() => setShowModal(false)}
-        popup
-        dismissible
-        size="md"
-      >
-        <Modal.Header />
-        <Modal.Body className="flex items-center justify-center flex-col gap-3">
+      <dialog id="deleteUserByAdmin" className="modal">
+        <div className="modal-box">
+<div className="flex items-center justify-between">
+
+          <h3 className="font-bold text-lg line-clamp-2">Delete "{usertoDelete}" ?</h3>
           <img src={userPic} className="w-24 h-auto object-cover rounded-lg" />
-          <h1 className="text-center text-2xl font-semibold dark:text-white">
-            Delete "{usertoDelete}" ?
-          </h1>
-          <div className="flex justify-between gap-5">
-            <Button
-              color="failure"
-              onClick={() => {
+</div>
+          <p className="py-4">This action is irreversible.</p>
+          <div className="modal-action">
+            <form method="dialog" className="flex gap-2">
+              <button onClick={() => {
                 handleDelete();
-                setShowModal(false);
-              }}
-            >
-              Delete
-            </Button>
-            <Button
-              onClick={() => setShowModal(false)}
-              gradientDuoTone="greenToBlue"
-            >
-              Cancel
-            </Button>
+              }} className="btn text-red-600">Delete</button>
+              <button className="btn">Close</button>
+            </form>
           </div>
-        </Modal.Body>
-      </Modal>
+        </div>
+      </dialog>
     </div>
   );
 };

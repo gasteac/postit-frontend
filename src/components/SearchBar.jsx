@@ -28,7 +28,7 @@ export const SearchBar = ({ handleSubmit, searchData, setSearchData }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="z-20 w-screen flex-col gap-4 h-full p-4 md:flex-row  flex items-center justify-evenly"
+      className="z-20  flex-col gap-4 h-full p-4 md:flex-row  flex items-center justify-evenly"
     >
       <input
         type="text"

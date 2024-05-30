@@ -53,7 +53,7 @@ export const Navbar = () => {
   };
  
   return (
-    <div className="navbar bg-base-200 justify-between gap-4 p-4">
+    <div className="navbar  bg-base-200 justify-between gap-4 p-4">
       <div className="flex gap-2">
         <Link to="/">
         <span className="btn text-xl">POST IT!</span>

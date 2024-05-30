@@ -22,7 +22,7 @@ export const Home = () => {
   }
 
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-start mt-12">
+    <div className="h-screen flex flex-col items-center justify-start mt-12">
       <ScrollToTop />
       <div className="text-4xl lg:text-5xl text-center mb-5">
         {currentUser ? (

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Button, Modal, Spinner } from "flowbite-react";
+import { Spinner } from "flowbite-react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 axios.defaults.withCredentials = true;
@@ -72,11 +72,7 @@ export const PostPage = () => {
         `/api/post/deletepost/${postIdtoDelete}/${postOwnerId}`, { withCredentials: true }
       );
       if (response.status === 200) {
-        navigate(
-          currentUser.isAdmin
-            ? "/dashboard?tab=posts"
-            : "/userDashboard?tab=posts"
-        );
+        navigate("/all-posts");
         // Crear una referencia no raíz utilizando child
         const fileRef = ref(storage, imageToDelete);
         if (imageToDelete === null) {
@@ -143,7 +139,7 @@ export const PostPage = () => {
               <ul className="menu menu-vertical lg:menu-horizontal flex items-center justify-center bg-base-200 gap-4 rounded-box md:justify-evenly mt-5 font-bold">
                 <li><Link className="text-center" to={`/update-post/${post._id}`}>Edit post </Link></li>
                 <li><a onClick={() => {
-                  setShowModal(true);
+                  document.getElementById('deletePost').showModal();
                   setPostIdtoDelete(post._id);
                   setPostTitletoDelete(post.title);
                   setImageToDelete(
@@ -179,43 +175,27 @@ export const PostPage = () => {
             )}
             <Link to={`/all-posts`}>
               <button
-                className="btn  btn-accent btn-wide my-12"
+                className="btn   btn-wide my-12"
               >
                 Show more posts
               </button>
             </Link>
-            <Modal
-              show={showModal}
-              onClose={() => setShowModal(false)}
-              popup
-              dismissible
-              size="md"
-            >
-              <Modal.Header />
-              <Modal.Body className="flex items-center justify-center flex-col gap-3">
-                <HiOutlineExclamationCircle className="text-red-500 text-6xl" />
-                <h1 className="text-center text-2xl font-semibold dark:text-white">
-                  Delete "{postTitletoDelete}" ?
-                </h1>
-                <div className="flex justify-between gap-5">
-                  <Button
-                    color="failure"
-                    onClick={() => {
+            <dialog id="deletePost" className="modal">
+              <div className="modal-box">
+                <h3 className="font-bold text-lg">Delete "{postTitletoDelete}" ?</h3>
+                <p className="py-4">This action is irreversible.</p>
+                <div className="modal-action">
+                  <form method="dialog" className="flex gap-2">
+                    <button onClick={() => {
                       handleDelete();
                       setShowModal(false);
-                    }}
-                  >
-                    Delete
-                  </Button>
-                  <Button
-                    onClick={() => setShowModal(false)}
-                    gradientDuoTone="greenToBlue"
-                  >
-                    Cancel
-                  </Button>
+                    }} className="btn text-red-600">Delete</button>
+                    <button className="btn">Close</button>
+                  </form>
                 </div>
-              </Modal.Body>
-            </Modal>
+              </div>
+            </dialog>
+
           </div>
         </>
       )}

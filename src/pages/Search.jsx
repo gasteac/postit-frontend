@@ -102,7 +102,7 @@ export const Search = () => {
   };
 
   return (
-    <div className="w-screen flex flex-col items-center justify-start mt-12 min-h-screen">
+    <div className=" flex flex-col items-center justify-start mt-12 min-h-screen">
       <ScrollToTop />
       <SearchBar
         setSearchData={setSearchData}
@@ -115,7 +115,7 @@ export const Search = () => {
         <Link to={`/all-posts`}>
           <button
             onClick={handleShowMore}
-            className="btn  btn-accent btn-wide my-12"
+            className="btn   btn-wide my-12"
           >
             Show more posts
           </button>

@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 axios.defaults.withCredentials = true;
 import { useSelector } from "react-redux";
+import { FaCheck, FaTimes } from "react-icons/fa";
 import {
   HiArrowNarrowUp,
   HiOutlineAnnotation,
   HiOutlineArchive,
   HiOutlineUserGroup,
 } from "react-icons/hi";
-import { Button, Table } from "flowbite-react";
+import { Table } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
+import { PostCard } from "./PostCard";
 export const DashboardComponent = () => {
   const [users, setUsers] = useState([]);
   const [totalUsers, setTotalUsers] = useState(0);
@@ -72,10 +74,10 @@ export const DashboardComponent = () => {
   }, [currentUser]);
 
   return (
-    <div className="w-full flex items-start flex-wrap mt-2">
+    <div className="w-full flex items-start flex-wrap mt-2 p-4">
       {/* ESTADISTICAS USUARIOS */}
-      <div className="md:mx-auto  h-fit w-full md:w-auto p-3 lg:flex-1 min-w-64">
-        <div className="flex flex-col bg-white p-3 dark:bg-slate-800 gap-4  w-full rounded-2xl shadow-md">
+      <div className=" h-fit w-full  p-3 lg:flex-1 min-w-64">
+        <div className="flex flex-col  p-3 bg-base-200 gap-4  w-full rounded-2xl shadow-md">
           <div className="flex justify-between ">
             <div className="">
               <h3 className="text-gray-500 text-md uppercase ">Total Users</h3>
@@ -94,7 +96,7 @@ export const DashboardComponent = () => {
       </div>
       {/* ESTADISTICAS COMENTARIOS */}
       <div className="md:mx-auto h-fit w-full md:w-auto p-3 lg:flex-1 min-w-64">
-        <div className="flex bg-white flex-col p-3 dark:bg-slate-800 gap-4  w-full rounded-2xl shadow-md">
+        <div className="flex  flex-col p-3 bg-base-200 gap-4  w-full rounded-2xl shadow-md">
           <div className="flex justify-between ">
             <div className="">
               <h3 className="text-gray-500 text-md uppercase ">
@@ -115,7 +117,7 @@ export const DashboardComponent = () => {
       </div>
       {/* ESTADISTICAS POSTS */}
       <div className="md:mx-auto  h-fit w-full md:w-auto p-3 lg:flex-1 min-w-64">
-        <div className="flex flex-col bg-white p-3 dark:bg-slate-800 gap-4  w-full rounded-2xl shadow-md">
+        <div className="flex flex-col  p-3 bg-base-200 gap-4  w-full rounded-2xl shadow-md">
           <div className="flex justify-between ">
             <div className="">
               <h3 className="text-gray-500 text-md uppercase ">Total Posts</h3>
@@ -136,112 +138,122 @@ export const DashboardComponent = () => {
       {/* TABLAS DE USUARIO COMENTARIOS Y POSTS */}
       <div className="p-4 self-start flex flex-wrap gap-4  mx-auto justify-center">
         {/* MANEJO DE USUARIOS */}
-        <div className="flex bg-white flex-col shadow-md rounded-lg dark:bg-gray-800 w-full md:flex-1">
+        <div className="flex  flex-col shadow-md rounded-lg bg-base-200 w-full md:flex-1">
           <div className="flex items-center justify-between p-3 text-sm font-semibold">
             <h1 className="text-center p-2">Recent Users</h1>
-            <Button outline gradientDuoTone="purpleToPink">
+            <button outline gradientDuoTone="purpleToPink">
               <Link to={"/dashboard?tab=users"}>See all</Link>
-            </Button>
+            </button>
           </div>
-          <Table hoverable>
-            <Table.Head>
-              <Table.HeadCell>User Image</Table.HeadCell>
-              <Table.HeadCell>email</Table.HeadCell>
-              <Table.HeadCell className="text-center">Username</Table.HeadCell>
-            </Table.Head>
-            {users &&
-              users.map((user) => (
-                <Table.Body key={user._id} className="divide-y">
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                    <Table.Cell>
-                      <img
-                        src={user.profilePic}
-                        alt={user.username}
-                        className="h-16 w-24 rounded-full object-cover bg-gray-500"
-                      />
-                    </Table.Cell>
-                    <Table.Cell>{user.email}</Table.Cell>
-                    <Table.Cell className="w-36 text-center">
-                      {user.username}
-                    </Table.Cell>
-                  </Table.Row>
-                </Table.Body>
+          <div className="overflow-x-auto">
+            <table className="table">
+              {/* head */}
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Admin?</th>
+                  <th>Date</th>
+                  <th>Delete</th>
+                  <th></th>
+                </tr>
+              </thead>
+              {users?.map((user) => (
+                <tbody>
+                  {/* row 1 */}
+                  <tr>
+
+                    <td>
+                      <div className="flex items-center gap-3">
+                        <div className="avatar">
+                          <div className="mask mask-squircle w-12 h-12">
+                            <img src={user.profilePic}
+                              alt={user.username} />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-bold">{user.username}</div>
+                          <div className="text-sm opacity-50">{user.email}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      {user.isAdmin ? (
+                        <FaCheck className="text-emerald-500" />
+                      ) : (
+                        <FaTimes className="text-red-500" />
+                      )}
+                    </td>
+                    <td> {new Date(user.updatedAt).toLocaleDateString()}</td>
+                   
+                  </tr>
+
+
+                </tbody>
               ))}
-          </Table>
+            </table>
+          </div>
         </div>
 
         {/* MANEJO DE COMENTARIOS */}
-        <div className="flex bg-white flex-col  min-w-80 shadow-md rounded-lg dark:bg-gray-800 w-full md:flex-1">
+        <div className="flex  flex-col  min-w-80 shadow-md rounded-lg bg-base-200 w-full md:flex-1">
           <div className="flex items-center justify-between p-3 text-sm font-semibold ">
             <h1 className="text-center p-2">Recent Comments</h1>
-            <Button outline gradientDuoTone="purpleToPink">
+            <button outline gradientDuoTone="purpleToPink">
               <Link to={"/dashboard?tab=comments"}>See all</Link>
-            </Button>
+            </button>
           </div>
-          <Table hoverable>
-            <Table.Head>
-              <Table.HeadCell>Comment</Table.HeadCell>
-              <Table.HeadCell>Likes</Table.HeadCell>
-            </Table.Head>
-            {comments &&
-              comments.map((comment) => (
-                <Table.Body key={comment._id} className="divide-y">
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                    <Table.Cell className="w-full line-clamp-3">
-                      {comment.content}
-                    </Table.Cell>
-                    <Table.Cell>{comment.numberOfLikes}</Table.Cell>
-                  </Table.Row>
-                </Table.Body>
+          <div className="overflow-x-auto p-8 h-xl">
+            <table className="table table-xs table-pin-cols">
+              <thead>
+                <tr>
+                  <td>Date</td>
+                  <td>Comment</td>
+                  <td>PostId</td>
+                  <td>UserId</td>
+                </tr>
+              </thead>
+              {comments?.map((comment) => (
+                <tbody>
+                  <tr key={comment._id} >
+                    <td>{new Date(comment.updatedAt).toLocaleDateString()}</td>
+                    <td className="md:max-w-xl">{comment.content}</td>
+                    <td>{comment.postId}</td>
+                    <td>{comment.userId}</td>
+                    <span
+                      onClick={() => {
+                        document.getElementById('deleteComment').showModal();
+                        setCommentIdtoDelete(comment._id);
+                        setCommentToDelete(comment.content);
+                      }}
+                      className="cursor-pointer text-red-400 font-medium hover:underline"
+                    >
+                      Delete
+                    </span>
+                  </tr>
+                </tbody>
               ))}
-          </Table>
+            </table>
+          </div>
         </div>
 
         {/* MANEJO DE POSTS */}
-        <div className="flex bg-white flex-col shadow-md rounded-lg dark:bg-gray-800 w-full ">
+        <div className="flex  flex-col shadow-md rounded-lg bg-base-200 w-full ">
           <div className="flex items-center justify-between p-3 text-sm font-semibold">
             <h1 className="text-center p-2">Recent Posts</h1>
-            <Button outline gradientDuoTone="purpleToPink">
-              <Link to={"/dashboard?tab=posts"}>See all</Link>
-            </Button>
+            <button outline gradientDuoTone="purpleToPink">
+              <Link to={"/all-posts"}>See all</Link>
+            </button>
           </div>
-          <Table hoverable>
-            <Table.Head>
-              <Table.HeadCell>Post Image</Table.HeadCell>
-              <Table.HeadCell className="text-center">
-                Post Title
-              </Table.HeadCell>
-              <Table.HeadCell className="text-center">
-                Description
-              </Table.HeadCell>
-            </Table.Head>
-            {posts &&
-              posts.map((post) => (
-                <Table.Body
-                  key={post._id}
-                  className="divide-y cursor-pointer"
-                  onClick={() => navigate(`/post/${post.slug}`)}
-                >
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                    <Table.Cell>
-                      <div className="w-32 h-20 bg-transparent">
-                        <img
-                          src={post.image}
-                          alt={post.title}
-                          className="object-cover w-full h-full rounded-lg"
-                        />
-                      </div>
-                    </Table.Cell>
-                    <Table.Cell className="w-64 text-center">
-                      {post.title}
-                    </Table.Cell>
-                    <Table.Cell className="line-clamp-2">
-                      {post.content}
-                    </Table.Cell>
-                  </Table.Row>
-                </Table.Body>
-              ))}
-          </Table>
+          {posts.length > 0 && (
+            <>
+              <div className="mt-5 flex flex-wrap items-center justify-center">
+                {posts?.map((post) => (
+                  <PostCard key={post._id} post={post} />
+                ))}
+              </div>
+              
+            </>
+          )}
         </div>
       </div>
     </div>

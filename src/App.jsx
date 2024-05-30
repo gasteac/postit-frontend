@@ -28,7 +28,7 @@ export const App = () => {
         {/* aca va el header, que es el único componente que se va a ver siempre */}
         {/* <Header /> */}
        <Navbar/>
-        <Routes className="bg-black">
+        <Routes className="overflow-clip">
           {/* si pongo una ruta mal me redirige a home con el *   */}
           <Route
             className="bg-black"

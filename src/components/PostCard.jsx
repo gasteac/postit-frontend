@@ -9,7 +9,7 @@ export const PostCard = ({ post }) => {
         {/* <img
           src={post.image}
           alt={post.title}
-          className="w-screen rounded-xl h-52 lg:w-96 lg:h-96 object-cover transition-all ease-in-out duration-150"
+          className=" rounded-xl h-52 lg:w-96 lg:h-96 object-cover transition-all ease-in-out duration-150"
         />
 
         <p
@@ -27,13 +27,13 @@ export const PostCard = ({ post }) => {
         </p> */}
 
         <div className="card w-96 bg-base-300 shadow-xl">
-          <figure><img className="w-screen rounded-xl h-52 lg:w-96 lg:h-52 object-cover transition-all ease-in-out duration-150" src={post.image} alt={post.title} /></figure>
+          <figure><img className=" rounded-xl h-52 w-full lg:w-96 lg:h-52 object-cover transition-all ease-in-out duration-150" src={post.image} alt={post.title} /></figure>
           <div className="card-body ">
             <h2 className="card-title">
               {post.title}
             </h2>
             <p className=" line-clamp-2">{post.content}</p>
-           
+
           </div>
         </div>
 

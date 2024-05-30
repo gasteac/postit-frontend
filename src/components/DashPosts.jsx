@@ -7,6 +7,7 @@ import { Button, Modal, Spinner, Table } from "flowbite-react";
 import { deleteObject, getStorage, ref } from "firebase/storage";
 import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { PostCard } from "./PostCard";
 export const DashPosts = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [userPosts, setUserPosts] = useState([]);
@@ -25,13 +26,13 @@ export const DashPosts = () => {
       try {
         setLoading(true);
         const res = await axios.get(
-          `/api/post/getposts?userId=${currentUser._id}&limit=4`, { withCredentials: true }
+          `/api/post/getposts?userId=${currentUser._id}&limit=6`, { withCredentials: true }
         );
         const { data } = res;
         if (res.status === 200) {
           setUserPosts(data.posts);
           setLoading(false);
-          if (data.posts.length < 4) {
+          if (data.posts.length < 6) {
             setShowMore(false);
           }
         }
@@ -73,14 +74,14 @@ export const DashPosts = () => {
       );
       const { data } = res1;
       const { totalPosts: totalPosts2 } = data;
-      const totalPostsRest = totalPosts2 - 4;
+      const totalPostsRest = totalPosts2 - 6;
       setTotalPosts(totalPostsRest);
     };
     fetchTotalPosts();
   }, [currentUser._id]);
 
   const handleShowMore = async () => {
-    const totalPostsRest = totalPosts - 4; // 9 5 1
+    const totalPostsRest = totalPosts - 6; // 9 5 1
     setTotalPosts(totalPostsRest);
     const numberOfPosts = userPosts.length; //4
     const startIndex = numberOfPosts; // 4
@@ -93,7 +94,7 @@ export const DashPosts = () => {
     }
     if (response.status === 200 && data.posts.length > 0) {
       setUserPosts([...userPosts, ...data.posts]);
-      if (data.posts.length < 4 || totalPostsRest < 1) {
+      if (data.posts.length < 6 || totalPostsRest < 1) {
         setShowMore(false);
       }
     }
@@ -107,102 +108,33 @@ export const DashPosts = () => {
     );
   }
   return (
-    <div className="p-2 md:p-6 table-auto overflow-x-scroll md:mx-auto scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-transparent dark:scrollbar-thumb-transparent">
+    <div className="p-2 md:p-6 md:mx-auto">
       {userPosts.length > 0 ? (
         <>
-          <Table hoverable className="bg-white dark:bg-slate-800 rounded-xl">
-            <Table.Head>
-              <Table.HeadCell className="text-nowrap">
-                Post Image
-              </Table.HeadCell>
-              <Table.HeadCell className="text-nowrap">
-                Post Title
-              </Table.HeadCell>
-              <Table.HeadCell className="text-nowrap">
-                Date updated
-              </Table.HeadCell>
-              <Table.HeadCell>Category</Table.HeadCell>
-              <Table.HeadCell>Delete</Table.HeadCell>
-              <Table.HeadCell>Edit</Table.HeadCell>
-            </Table.Head>
-            {userPosts?.map((post) => (
-              <Table.Body key={post._id} className="divide-y-2 ">
-                <Table.Row>
-                  <Table.Cell as="div">
-                    <Link to={`/post/${post.slug}`}>
-                      <div className="w-32 h-20 bg-transparent">
-                        <img
-                          src={post.image}
-                          alt={post.title}
-                          className="object-cover w-full h-full rounded-lg"
-                        />
-                      </div>
-                    </Link>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Link className="font-medium" to={`/post/${post.slug}`}>
-                      {post.title}
-                    </Link>
-                  </Table.Cell>
-                  <Table.Cell className="font-medium ">
-                    {" "}
-                    {new Date(post.updatedAt).toLocaleDateString()}
-                  </Table.Cell>
-                  <Table.Cell className="font-medium">
-                    {post.category}
-                  </Table.Cell>
-                  <Table.Cell>
-                    <span
-                      onClick={() => {
-                        setShowModal(true);
-                        setPostIdtoDelete(post._id);
-                        setPostTitletoDelete(post.title);
-                        setImageToDelete(
-                          post.image.includes(
-                            "video-tutoriales-sobre-email-marketing"
-                          )
-                            ? null
-                            : post.image
-                        );
-                      }}
-                      className="cursor-pointer text-red-500 font-medium hover:underline"
-                    >
-                      Delete
-                    </span>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Link to={`/update-post/${post._id}`}>
-                      <span className="text-teal-500 font-medium hover:underline">
-                        Edit
-                      </span>
-                    </Link>
-                  </Table.Cell>
-                </Table.Row>
-              </Table.Body>
-            ))}
-          </Table>
+          <div className="mt-5 flex flex-wrap items-center justify-center">
+          {userPosts?.map((post) => (
+            <PostCard key={post._id} post={post} />
+          ))}
+          </div>
           {showMore && (
-            <Button
-              gradientDuoTone="purpleToBlue"
-              outline
+            <button
+              className="btn mt-4 w-full mb-5" 
               onClick={handleShowMore}
-              className="hover:brightness-90 dark:hover:brightness-115 p-1 my-5 self-center mx-auto"
             >
               Show more
-            </Button>
+            </button>
           )}
         </>
       ) : (
         <div className="h-screen text-center text-2xl">
           <p> You have no posts yet.</p>
-          <Button
-            className="mx-auto mt-5 p-0"
-            onClick={() => navigate("/create-post")}
-          >
-            Create a post
-          </Button>
+            <button className="btn mt-4" onClick={() => navigate("/create-post")}>
+              Create a post
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+            </button>
         </div>
       )}
+     
       <Modal
         show={showModal}
         onClose={() => setShowModal(false)}

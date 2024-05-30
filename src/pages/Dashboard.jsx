@@ -24,7 +24,7 @@ export const Dashboard = () => {
     setTab(tabFromUrl);
   }, [location.search]);
   return (
-    <div className="flex relative flex-col md:flex-row w-screen min-h-screen ">
+    <div className="flex relative flex-col md:flex-row  min-h-screen ">
       <ScrollToTop />
       <div className="md:min-w-56" />
       <div className=" md:fixed top-[12%] left-0">

@@ -56,11 +56,7 @@ export const UpdatePost = () => {
         `/api/post/deletepost/${postIdtoDelete}/${postOwnerId}`, { withCredentials: true }
       );
       if (response.status === 200) {
-        navigate(
-          currentUser.isAdmin
-            ? "/dashboard?tab=posts"
-            : "/userDashboard?tab=posts"
-        );
+        navigate("/all-posts");
         // Crear una referencia no raíz utilizando child
         const fileRef = ref(storage, imageToDelete);
         if (imageToDelete === null) {
@@ -398,7 +394,8 @@ export const UpdatePost = () => {
 
 
             onClick={() => {
-              setShowModal(true);
+              document.getElementById('deletePost').showModal();
+
               setPostIdtoDelete(postData._id);
               setPostTitletoDelete(postData.title);
               setImageToDelete(
@@ -414,38 +411,21 @@ export const UpdatePost = () => {
           </button>
         </div>
       </form>
-      <Modal
-        show={showModal}
-        onClose={() => setShowModal(false)}
-        popup
-        dismissible
-        size="md"
-      >
-        <Modal.Header />
-        <Modal.Body className="flex items-center justify-center flex-col gap-3">
-          <HiOutlineExclamationCircle className="text-red-500 text-6xl" />
-          <h1 className="text-center text-2xl font-semibold dark:text-white">
-            Delete "{postTitletoDelete}" ?
-          </h1>
-          <div className="flex justify-between gap-5">
-            <Button
-              color="failure"
-              onClick={() => {
+      <dialog id="deletePost" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Delete "{postTitletoDelete}" ?</h3>
+          <p className="py-4">This action is irreversible.</p>
+          <div className="modal-action">
+            <form method="dialog" className="flex gap-2">
+              <button onClick={() => {
                 handleDelete();
                 setShowModal(false);
-              }}
-            >
-              Delete
-            </Button>
-            <Button
-              onClick={() => setShowModal(false)}
-              gradientDuoTone="greenToBlue"
-            >
-              Cancel
-            </Button>
+              }} className="btn text-red-600">Delete</button>
+              <button className="btn">Close</button>
+            </form>
           </div>
-        </Modal.Body>
-      </Modal>
+        </div>
+      </dialog>
     </div>
   );
 };

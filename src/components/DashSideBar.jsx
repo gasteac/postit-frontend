@@ -111,7 +111,7 @@ export const DashSideBar = () => {
 
   return (
     <Flowbite theme={{ theme: customTheme }}>
-      <Sidebar className=" w-screen p-2 md:p-0 md:w-56  z-40">
+      <Sidebar className=" w-screen p-2 md:p-0 md:w-56 md:ml-3 z-40">
         <Sidebar.Items>
           <Sidebar.ItemGroup className="flex flex-col">
             {/* Si tab es igual a profile mostramos el item con el icono de HiUser y el label User */}

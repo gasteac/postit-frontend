@@ -25,7 +25,7 @@ export const DashComments = () => {
       );
       if (res.statusText === "OK") {
         setComments([...comments, ...res.data.comments]);
-        if (res.data.comments.length < 8) {
+        if (res.data.comments.length < 16) {
           setShowMore(false);
         }
       }
@@ -61,7 +61,7 @@ export const DashComments = () => {
         if (res.status === 200) {
           setComments(data.comments);
           setLoading(false);
-          if (data.comments.length < 8) {
+          if (data.comments.length < 16) {
             setShowMore(false);
           }
         }
@@ -83,10 +83,42 @@ export const DashComments = () => {
     );
   }
   return (
-    <div className="p-2 md:max-w-[80%] md:p-6 h-screen table-auto overflow-x-scroll md:mx-auto scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-transparent dark:scrollbar-thumb-transparent">
+    <div className="p-2  md:p-6  w-full scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 min-h-screen">
       {currentUser.isAdmin && comments.length > 0 ? (
         <>
-          <Table hoverable className="bg-white dark:bg-slate-800 rounded-xl">
+          <div className="overflow-x-auto p-8 h-xl">
+            <table className="table table-xs table-pin-cols">
+              <thead>
+                <tr>
+                  <td>Date</td>
+                  <td>Comment</td>
+                  <td>PostId</td>
+                  <td>UserId</td>
+                </tr>
+              </thead>
+              {comments?.map((comment) => (
+                <tbody>
+                  <tr key={comment._id} >
+                    <td>{new Date(comment.updatedAt).toLocaleDateString()}</td>
+                    <td className="md:max-w-xl">{comment.content}</td>
+                    <td>{comment.postId}</td>
+                    <td>{comment.userId}</td>
+                    <span
+                      onClick={() => {
+                        document.getElementById('deleteComment').showModal();
+                        setCommentIdtoDelete(comment._id);
+                        setCommentToDelete(comment.content);
+                      }}
+                      className="cursor-pointer text-red-400 font-medium hover:underline"
+                    >
+                      Delete
+                    </span>
+                  </tr>
+                </tbody>
+              ))}
+            </table>
+          </div>
+          {/* <Table hoverable className="bg-white dark:bg-slate-800 rounded-xl">
             <Table.Head>
               <Table.HeadCell className="text-nowrap">
                 date created
@@ -133,16 +165,13 @@ export const DashComments = () => {
                 </Table.Row>
               </Table.Body>
             ))}
-          </Table>
+          </Table> */}
           {showMore && (
-            <Button
-              gradientDuoTone="purpleToBlue"
-              outline
+            <button
               onClick={handleShowMore}
-              className="hover:brightness-90 dark:hover:brightness-115 p-1 my-5 self-center mx-auto"
-            >
+              className="btn btn-neutral my-5 w-full"            >
               Show more
-            </Button>
+            </button>
           )}
         </>
       ) : (
@@ -150,38 +179,21 @@ export const DashComments = () => {
           There are no comments yet
         </div>
       )}
-      <Modal
-        show={showModal}
-        onClose={() => setShowModal(false)}
-        popup
-        dismissible
-        size="md"
-      >
-        <Modal.Header />
-        <Modal.Body className="flex items-center justify-center flex-col gap-3">
-          <h1 className="text-center text-2xl font-semibold dark:text-white">
-            Delete this comment ?
-          </h1>
-          <p className="line-clamp-2 mb-2 dark:text-white">{commentToDelete}</p>
-          <div className="flex justify-between gap-5">
-            <Button
-              color="failure"
-              onClick={() => {
+      <dialog id="deleteComment" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg line-clamp-2">Delete "{commentToDelete}" ?</h3>
+          <p className="py-4">This action is irreversible.</p>
+          <div className="modal-action">
+            <form method="dialog" className="flex gap-2">
+              <button onClick={() => {
                 handleDelete();
-                setShowModal(false);
-              }}
-            >
-              Delete
-            </Button>
-            <Button
-              onClick={() => setShowModal(false)}
-              gradientDuoTone="greenToBlue"
-            >
-              Cancel
-            </Button>
+              }} className="btn text-red-600">Delete</button>
+              <button className="btn">Close</button>
+            </form>
           </div>
-        </Modal.Body>
-      </Modal>
+        </div>
+      </dialog>
+     
     </div>
   );
 };

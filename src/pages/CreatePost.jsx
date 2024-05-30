@@ -189,7 +189,7 @@ export const CreatePost = () => {
     <>
       <ScrollToTop />
       {!currentUser ? (
-        <div className="h-screen w-screen flex flex-col gap-5 items-center justify-start mt-12">
+        <div className="h-screen  flex flex-col gap-5 items-center justify-start mt-12">
           <h1 className="text-4xl lg:text-5xl text-center mb-5">
             <span className="hiText capitalize font-bold">ERROR</span>
           </h1>

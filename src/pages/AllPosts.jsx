@@ -83,7 +83,7 @@ export const AllPosts = () => {
           <Spinner size="xl" />
         </div>
       ) : (
-        <div className="w-screen flex flex-col items-center justify-start mt-12 min-h-screen">
+        <div className=" flex flex-col items-center justify-start mt-12 min-h-screen">
           {allPosts.length > 0 ? (
             <>
               <div className="mt-5 flex flex-wrap items-center justify-center">
@@ -95,7 +95,7 @@ export const AllPosts = () => {
                 <Link to={`/all-posts`}>
                   <button
                     onClick={handleShowMore}
-                    className="btn  btn-accent btn-wide my-12"
+                    className="btn   btn-wide my-12"
                   >
                     Show more posts
                   </button>

@@ -133,9 +133,9 @@ export const CommentSection = ({ postId }) => {
           </div>
 
           <form onSubmit={handleSubmit}>
-            <Textarea
+            <textarea
               placeholder="Write your comment here"
-              className="w-full mb-2 resize-none"
+              className="w-full mb-2 resize-none textarea textarea-bordered"
               rows={3}
               maxLength={369}
               value={comment}
@@ -145,17 +145,16 @@ export const CommentSection = ({ postId }) => {
               <p className="text-xs">
                 {369 - comment.length} characters remaining
               </p>
-              <Button
-                outline
-                gradientDuoTone="purpleToBlue"
+              <button
+               
                 type="submit"
-                className="self-end"
+                className="self-end btn"
               >
                 Post Comment
-              </Button>
+              </button>
             </div>
           </form>
-          <hr className="m-6" />
+          <br />
         </>
       )}
       {comments?.length === 0 ? (

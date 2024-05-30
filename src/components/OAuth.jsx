@@ -52,9 +52,9 @@ export const OAuth = () => {
 
   return (
     <button
-    type="button"
+      type="button"
       onClick={handleGoogleClick}
-      className="btn btn-outline btn-accent"
+      className="btn btn-outline "
     >
       <AiFillGoogleCircle className="w-6 h-6 mr-2" />
       Continue with Google
