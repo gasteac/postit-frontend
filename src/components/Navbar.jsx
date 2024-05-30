@@ -44,30 +44,30 @@ export const Navbar = () => {
 
   const handleSignOut = () => {
     try {
-      axios.post(`/api/user/logout`, { withCredentials: true });
+      axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/logout`, { withCredentials: true });
       dispatch(logoutSuccess());
       navigate("/signin");
     } catch (error) {
       console.log(error);
     }
   };
- 
+
   return (
     <div className="navbar  bg-base-200 justify-between gap-4 p-4">
       <div className="flex gap-2">
         <Link to="/">
-        <span className="btn text-xl">POST IT!</span>
+          <span className="btn text-xl">POST IT!</span>
         </Link>
-       
+
       </div>
-      
+
       <div className="hidden lg:flex">
         <div className="navbar-center items-center lg:flex gap-4">
           <ul className=" menu-horizontal px-1 text-xl">
             <li> <Link to="/" className={`w-full flex p-2 ${path === "/"
               ? "font-semibold  text-white"
               : ""
-                }` }>Home</Link></li>
+              }`}>Home</Link></li>
             <li> <Link to="/all-posts" className={`w-full flex p-2 ${path === "/all-posts"
               ? "font-semibold  text-white"
               : ""
@@ -84,7 +84,7 @@ export const Navbar = () => {
           </Link>
         </div>
       </div>
-    
+
       {currentUser ? (
         <div className="dropdown dropdown-end ">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
@@ -102,28 +102,28 @@ export const Navbar = () => {
                     : "/userDashboard?tab=profile"
                 }
               >
-              <span>Profile</span>
+                <span>Profile</span>
               </Link>
             </li>
-                {currentUser.isAdmin && (
+            {currentUser.isAdmin && (
               <li>
-                  <Link to={"/dashboard?tab=overview"}>
-                    Dashboard
-                  </Link>
-                </li>
-              )}
-              <li><a onClick={handleSignOut}>Logout</a></li>
-            
+                <Link to={"/dashboard?tab=overview"}>
+                  Dashboard
+                </Link>
+              </li>
+            )}
+            <li><a onClick={handleSignOut}>Logout</a></li>
+
           </ul>
         </div>
 
       ) : (<>
         <div className="flex gap-2">
           <Link to="signin">
-              <button className="btn btn-outline">Sign In</button>
+            <button className="btn btn-outline">Sign In</button>
           </Link>
           <Link to="signup">
-              <button className="btn btn-outline btn-primary">Sign Up</button>
+            <button className="btn btn-outline btn-primary">Sign Up</button>
           </Link>
         </div>
       </>)}

@@ -21,7 +21,7 @@ export const DashComments = () => {
     const startIndex = comments.length;
     try {
       const res = await axios.get(
-        `/api/comment/getComments?startIndex=${startIndex}`, { withCredentials: true }
+        `${import.meta.env.VITE_BACKEND_URL}/api/comment/getComments?startIndex=${startIndex}`, { withCredentials: true }
       );
       if (res.statusText === "OK") {
         setComments([...comments, ...res.data.comments]);
@@ -37,7 +37,7 @@ export const DashComments = () => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `/api/comment/deleteComment/${commentIdtoDelete}`, { withCredentials: true }
+        `${import.meta.env.VITE_BACKEND_URL}/api/comment/deleteComment/${commentIdtoDelete}`, { withCredentials: true }
       );
 
       if (response.status === 200) {
@@ -55,7 +55,7 @@ export const DashComments = () => {
     const fetchComments = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`/api/comment/getComments`, { withCredentials: true });
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/comment/getComments`, { withCredentials: true });
 
         const { data } = res;
         if (res.status === 200) {
@@ -193,7 +193,7 @@ export const DashComments = () => {
           </div>
         </div>
       </dialog>
-     
+
     </div>
   );
 };

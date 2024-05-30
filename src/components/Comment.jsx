@@ -10,7 +10,7 @@ export const Comment = ({ comment, onLike, handleDeleteComment }) => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await axios.get(`/api/user/${comment.userId}`, { withCredentials: true });
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/${comment.userId}`, { withCredentials: true });
         if (res.status !== 200) {
           return;
         }
@@ -57,8 +57,8 @@ export const Comment = ({ comment, onLike, handleDeleteComment }) => {
             type="button"
             onClick={() => onLike(comment._id)}
             className={`text-gray-400 hover:text-blue-500 ${currentUser && comment.likes.includes(currentUser._id)
-                ? "!text-blue-500"
-                : "text-gray-500"
+              ? "!text-blue-500"
+              : "text-gray-500"
               }`}
           >
             <FaThumbsUp />

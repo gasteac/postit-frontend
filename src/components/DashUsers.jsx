@@ -21,7 +21,7 @@ export const DashUsers = () => {
   const handleShowMore = async () => {
     const startIndex = users.length;
     try {
-      const res = await axios.get(`/api/user/getusers?startIndex=${startIndex}`, { withCredentials: true });
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/getusers?startIndex=${startIndex}`, { withCredentials: true });
       if (res.statusText === "OK") {
         setUsers([...users, ...res.data.users]);
         if (res.data.users.length < 17) {
@@ -36,7 +36,7 @@ export const DashUsers = () => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `/api/user/deleteuser/${userIdtoDelete}`, { withCredentials: true }
+        `${import.meta.env.VITE_BACKEND_URL}/api/user/deleteuser/${userIdtoDelete}`, { withCredentials: true }
       );
 
       if (response.status === 200) {
@@ -60,7 +60,7 @@ export const DashUsers = () => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`/api/user/getusers`, { withCredentials: true });
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/getusers`, { withCredentials: true });
 
         const { data } = res;
         if (res.status === 200) {
@@ -95,43 +95,43 @@ export const DashUsers = () => {
               {/* head */}
               <thead>
                 <tr>
-                 
+
                   <th>Image</th>
                   <th>Admin?</th>
                   <th>Date</th>
                   <th>Delete</th>
-               
+
                   <th></th>
                 </tr>
               </thead>
               {users?.map((user) => (
-              <tbody>
-                {/* row 1 */}
-                <tr>
-                  
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle w-12 h-12">
+                <tbody>
+                  {/* row 1 */}
+                  <tr>
+
+                    <td>
+                      <div className="flex items-center gap-3">
+                        <div className="avatar">
+                          <div className="mask mask-squircle w-12 h-12">
                             <img src={user.profilePic}
                               alt={user.username} />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-bold">{user.username}</div>
+                          <div className="text-sm opacity-50">{user.email}</div>
                         </div>
                       </div>
-                      <div>
-                        <div className="font-bold">{user.username}</div>
-                        <div className="text-sm opacity-50">{user.email}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
+                    </td>
+                    <td>
                       {user.isAdmin ? (
                         <FaCheck className="text-emerald-500" />
                       ) : (
                         <FaTimes className="text-red-500" />
                       )}
-                  </td>
+                    </td>
                     <td> {new Date(user.updatedAt).toLocaleDateString()}</td>
-                  <th>
+                    <th>
                       <span
                         onClick={() => {
                           document.getElementById('deleteUserByAdmin').showModal();
@@ -150,15 +150,15 @@ export const DashUsers = () => {
                       >
                         Delete
                       </span>
-                  </th>
-                </tr>
-               
-                
-              </tbody>
+                    </th>
+                  </tr>
+
+
+                </tbody>
               ))}
             </table>
           </div>
-          
+
           {showMore && (
             <button
               onClick={handleShowMore}
@@ -174,11 +174,11 @@ export const DashUsers = () => {
       )}
       <dialog id="deleteUserByAdmin" className="modal">
         <div className="modal-box">
-<div className="flex items-center justify-between">
+          <div className="flex items-center justify-between">
 
-          <h3 className="font-bold text-lg line-clamp-2">Delete "{usertoDelete}" ?</h3>
-          <img src={userPic} className="w-24 h-auto object-cover rounded-lg" />
-</div>
+            <h3 className="font-bold text-lg line-clamp-2">Delete "{usertoDelete}" ?</h3>
+            <img src={userPic} className="w-24 h-auto object-cover rounded-lg" />
+          </div>
           <p className="py-4">This action is irreversible.</p>
           <div className="modal-action">
             <form method="dialog" className="flex gap-2">

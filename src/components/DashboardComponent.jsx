@@ -27,7 +27,7 @@ export const DashboardComponent = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const usersFetch = await axios.get(`/api/user/getUsers?limit=3`, { withCredentials: true });
+        const usersFetch = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/getUsers?limit=3`, { withCredentials: true });
         if (usersFetch.status === 200) {
           setUsers(usersFetch.data.users);
           setTotalUsers(usersFetch.data.totalUsers);
@@ -40,7 +40,7 @@ export const DashboardComponent = () => {
     };
     const fetchPosts = async () => {
       try {
-        const postsFetch = await axios.get(`/api/post/getPosts?limit=3`, { withCredentials: true });
+        const postsFetch = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getPosts?limit=3`, { withCredentials: true });
         if (postsFetch.status === 200) {
           setPosts(postsFetch.data.posts);
           setTotalPosts(postsFetch.data.totalPosts);
@@ -54,7 +54,7 @@ export const DashboardComponent = () => {
     const fetchComments = async () => {
       try {
         const commentsFetch = await axios.get(
-          `/api/comment/getComments?limit=3`, { withCredentials: true }
+          `${import.meta.env.VITE_BACKEND_URL}/api/comment/getComments?limit=3`, { withCredentials: true }
         );
         if (commentsFetch.status === 200) {
           setComments(commentsFetch.data.comments);
@@ -184,7 +184,7 @@ export const DashboardComponent = () => {
                       )}
                     </td>
                     <td> {new Date(user.updatedAt).toLocaleDateString()}</td>
-                   
+
                   </tr>
 
 
@@ -251,7 +251,7 @@ export const DashboardComponent = () => {
                   <PostCard key={post._id} post={post} />
                 ))}
               </div>
-              
+
             </>
           )}
         </div>

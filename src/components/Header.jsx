@@ -44,7 +44,7 @@ export const Header = () => {
 
   const handleSignOut = () => {
     try {
-      axios.post(`/api/user/logout`, { withCredentials: true });
+      axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/logout`, { withCredentials: true });
       dispatch(logoutSuccess());
       navigate("/signin");
     } catch (error) {

@@ -29,7 +29,7 @@ export const PostPage = () => {
   useEffect(() => {
     try {
       const getRecentPosts = async () => {
-        const res = await axios.get(`/api/post/getposts?limit=4`, { withCredentials: true });
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?limit=4`, { withCredentials: true });
         if (res.status === 200) {
           setRecentPosts(res.data.posts);
           setRecentPosts((prev) =>
@@ -47,7 +47,7 @@ export const PostPage = () => {
     try {
       const getPostBySlug = async () => {
         setIsLoading(true);
-        const res = await axios.get(`/api/post/getposts?slug=${postSlug}`, { withCredentials: true });
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?slug=${postSlug}`, { withCredentials: true });
         if (res.status === 200) {
           setIsLoading(false);
           setPost(res.data.posts[0]);
@@ -69,7 +69,7 @@ export const PostPage = () => {
     try {
       console.log(postIdtoDelete, currentUser._id);
       const response = await axios.delete(
-        `/api/post/deletepost/${postIdtoDelete}/${postOwnerId}`, { withCredentials: true }
+        `${import.meta.env.VITE_BACKEND_URL}/api/post/deletepost/${postIdtoDelete}/${postOwnerId}`, { withCredentials: true }
       );
       if (response.status === 200) {
         navigate("/all-posts");

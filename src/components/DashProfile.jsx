@@ -142,7 +142,7 @@ export const DashProfile = () => {
             //Reseteo el estado de subida de la imagen
             setImageFileUploading(false);
             //Elimino la imagen anterior de firebase
-            axios.put(`/api/user/update/${currentUser._id}`, {
+            axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/user/update/${currentUser._id}`, {
               ...currentUser,
               username: currentUser.username,
               email: currentUser.email,
@@ -220,8 +220,8 @@ export const DashProfile = () => {
       try {
         // Cuando el usuario envía el formulario, se dispara la acción SignUpStart, que cambia el estado isLoading a true.
         dispatch(modifyUserStart());
-        // Hacemos una petición POST a la ruta /api/auth/signup con los datos del formulario. (trim saca los espacios en blanco al principio y al final de un string)
-        const res = await axios.put(`/api/user/update/${currentUser._id}`, {
+        // Hacemos una petición POST a la ruta ${import.meta.env.VITE_BACKEND_URL}/api/auth/signup con los datos del formulario. (trim saca los espacios en blanco al principio y al final de un string)
+        const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/user/update/${currentUser._id}`, {
           ...currentUser,
           username: username,
           email: email,
@@ -250,7 +250,7 @@ export const DashProfile = () => {
   const deleteUser = async () => {
     setShowModal(false);
     try {
-      await axios.delete(`/api/user/delete/${currentUser._id}`, { withCredentials: true });
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/user/delete/${currentUser._id}`, { withCredentials: true });
       dispatch(deleteUserSuccess());
       localStorage.removeItem("persist:root");
     } catch (error) {
@@ -260,7 +260,7 @@ export const DashProfile = () => {
 
   const handleSignOut = () => {
     try {
-      axios.post(`/api/user/logout`, { withCredentials: true });
+      axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/logout`, { withCredentials: true });
       dispatch(logoutSuccess());
       navigate("/signin");
     } catch (error) {

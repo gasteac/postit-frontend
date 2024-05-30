@@ -45,8 +45,8 @@ export const SignUp = () => {
       try {
         // Cuando el usuario envía el formulario, se dispara la acción SignUpStart, que cambia el estado isLoading a true.
         dispatch(signUpStart());
-        // Hacemos una petición POST a la ruta /api/auth/signup con los datos del formulario. (trim saca los espacios en blanco al principio y al final de un string)
-        const res = await axios.post(`/api/auth/signup`, {
+        // Hacemos una petición POST a la ruta ${import.meta.env.VITE_BACKEND_URL}/api/auth/signup con los datos del formulario. (trim saca los espacios en blanco al principio y al final de un string)
+        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`, {
           username: username,
           email: email,
           password: password,

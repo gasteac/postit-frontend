@@ -42,8 +42,8 @@ export const SignIn = () => {
       try {
         // Cuando el usuario envía el formulario, se dispara la acción SignInStart, que cambia el estado isLoading a true.
         dispatch(signInStart());
-        // Hacemos una petición POST a la ruta /api/auth/signin con los datos del formulario. 
-        const res = await axios.post(`/api/auth/signin`, {
+        // Hacemos una petición POST a la ruta ${import.meta.env.VITE_BACKEND_URL}/api/auth/signin con los datos del formulario. 
+        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signin`, {
           email: email.toLowerCase(),
           password,
         }, { withCredentials: true });

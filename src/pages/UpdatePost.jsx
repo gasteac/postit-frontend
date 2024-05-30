@@ -53,7 +53,7 @@ export const UpdatePost = () => {
     try {
       console.log(postIdtoDelete, currentUser._id);
       const response = await axios.delete(
-        `/api/post/deletepost/${postIdtoDelete}/${postOwnerId}`, { withCredentials: true }
+        `${import.meta.env.VITE_BACKEND_URL}/api/post/deletepost/${postIdtoDelete}/${postOwnerId}`, { withCredentials: true }
       );
       if (response.status === 200) {
         navigate("/all-posts");
@@ -75,7 +75,7 @@ export const UpdatePost = () => {
   useEffect(() => {
     try {
       const getPostById = async () => {
-        const res = await axios.get(`/api/post/getposts?postId=${postId}`, { withCredentials: true });
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?postId=${postId}`, { withCredentials: true });
         if (res.status !== 200) setUpdatePostError(res.data.message);
         if (res.status === 200) {
           setPostData(res.data.posts[0]);
@@ -146,7 +146,7 @@ export const UpdatePost = () => {
           setImageFileUploading(false);
           setUploadImgError(null);
           axios
-            .put(`/api/post/updatepost/${postId}/${postOwnerId}`, {
+            .put(`${import.meta.env.VITE_BACKEND_URL}/api/post/updatepost/${postId}/${postOwnerId}`, {
               title,
               content,
               category,
@@ -207,7 +207,7 @@ export const UpdatePost = () => {
         }
 
         const postSaved = await axios.put(
-          `/api/post/updatepost/${postId}/${postOwnerId}`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/post/updatepost/${postId}/${postOwnerId}`,
           {
             title,
             content,
@@ -237,7 +237,7 @@ export const UpdatePost = () => {
   useEffect(() => {
     try {
       const getPostById = async () => {
-        const res = await axios.get(`/api/post/getposts?postId=${postId}`, { withCredentials: true });
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?postId=${postId}`, { withCredentials: true });
         if (res.status !== 200) setUpdatePostError(res.data.message);
         if (res.status === 200) {
           setPostData(res.data.posts[0]);
@@ -379,14 +379,14 @@ export const UpdatePost = () => {
           }}
         />
         <div className="flex  gap-5 justify-evenly align-middle items-center">
-        
+
           <button
             type="submit"
             className="btn btn-active btn-succes flex-1"
             disabled={imageFileUploading}
-            onClick={()=>{setPostSlug(postData.slug)}}
+            onClick={() => { setPostSlug(postData.slug) }}
           >
-           Update Post
+            Update Post
           </button>
           <button
             className="btn btn-error flex-1"

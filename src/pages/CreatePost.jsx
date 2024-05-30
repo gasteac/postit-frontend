@@ -108,7 +108,7 @@ export const CreatePost = () => {
           setImageFileUploading(false);
           setUploadImgError(null);
           axios
-            .post(`/api/post/create`, {
+            .post(`${import.meta.env.VITE_BACKEND_URL}/api/post/create`, {
               title,
               content,
               category,
@@ -153,7 +153,7 @@ export const CreatePost = () => {
         if (imageFile) {
           return uploadImage(title, content, category);
         }
-        const postSaved = await axios.post(`/api/post/create`, {
+        const postSaved = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/post/create`, {
           title,
           content,
           category,

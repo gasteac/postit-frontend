@@ -41,7 +41,7 @@ export const DashSideBar = () => {
   }, [location.search]);
   const handleSignOut = () => {
     try {
-      axios.post(`/api/user/logout`, { withCredentials: true });
+      axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/logout`, { withCredentials: true });
       dispatch(logoutSuccess());
     } catch (error) {
       console.log(error);

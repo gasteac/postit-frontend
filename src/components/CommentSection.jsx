@@ -23,7 +23,7 @@ export const CommentSection = ({ postId }) => {
     if (comments.length > 0) return;
     const fetchComments = async () => {
       try {
-        const res = await axios.get(`/api/comment/getPostComments/${postId}`, { withCredentials: true });
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/comment/getPostComments/${postId}`, { withCredentials: true });
         if (res.status !== 200) {
           return;
         }
@@ -39,7 +39,7 @@ export const CommentSection = ({ postId }) => {
 
   const handleDeleteComment = async (commentId) => {
     try {
-      const res = await axios.delete(`/api/comment/deleteComment/${commentId}`, { withCredentials: true });
+      const res = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/comment/deleteComment/${commentId}`, { withCredentials: true });
       if (res.status !== 200) {
         return;
       }
@@ -58,7 +58,7 @@ export const CommentSection = ({ postId }) => {
         navigate("/signin");
         return;
       }
-      const res = await axios.put(`/api/comment/likeComment/${commentId}`, { withCredentials: true });
+      const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/comment/likeComment/${commentId}`, { withCredentials: true });
       if (res.status === 200) {
         setComments(
           comments.map((comment) =>
@@ -85,7 +85,7 @@ export const CommentSection = ({ postId }) => {
     }
     setCommentError(null);
     try {
-      const res = await axios.post(`/api/comment/create`, {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/comment/create`, {
         postId,
         content: comment,
         userId: currentUser._id,
@@ -146,7 +146,7 @@ export const CommentSection = ({ postId }) => {
                 {369 - comment.length} characters remaining
               </p>
               <button
-               
+
                 type="submit"
                 className="self-end btn"
               >

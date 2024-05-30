@@ -26,7 +26,7 @@ export const DashPosts = () => {
       try {
         setLoading(true);
         const res = await axios.get(
-          `/api/post/getposts?userId=${currentUser._id}&limit=6`, { withCredentials: true }
+          `${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?userId=${currentUser._id}&limit=6`, { withCredentials: true }
         );
         const { data } = res;
         if (res.status === 200) {
@@ -47,7 +47,7 @@ export const DashPosts = () => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `/api/post/deletepost/${postIdtoDelete}/${currentUser._id}`, { withCredentials: true }
+        `${import.meta.env.VITE_BACKEND_URL}/api/post/deletepost/${postIdtoDelete}/${currentUser._id}`, { withCredentials: true }
       );
 
       if (response.status === 200) {
@@ -70,7 +70,7 @@ export const DashPosts = () => {
   useEffect(() => {
     const fetchTotalPosts = async () => {
       const res1 = await axios.get(
-        `/api/post/getposts?userId=${currentUser._id}`, { withCredentials: true }
+        `${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?userId=${currentUser._id}`, { withCredentials: true }
       );
       const { data } = res1;
       const { totalPosts: totalPosts2 } = data;
@@ -86,7 +86,7 @@ export const DashPosts = () => {
     const numberOfPosts = userPosts.length; //4
     const startIndex = numberOfPosts; // 4
     const response = await axios.get(
-      `/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`, { withCredentials: true }
+      `${import.meta.env.VITE_BACKEND_URL}/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`, { withCredentials: true }
     );
     const data = response?.data;
     if (response.status !== 200) {
@@ -112,13 +112,13 @@ export const DashPosts = () => {
       {userPosts.length > 0 ? (
         <>
           <div className="mt-5 flex flex-wrap items-center justify-center">
-          {userPosts?.map((post) => (
-            <PostCard key={post._id} post={post} />
-          ))}
+            {userPosts?.map((post) => (
+              <PostCard key={post._id} post={post} />
+            ))}
           </div>
           {showMore && (
             <button
-              className="btn mt-4 w-full mb-5" 
+              className="btn mt-4 w-full mb-5"
               onClick={handleShowMore}
             >
               Show more
@@ -128,13 +128,13 @@ export const DashPosts = () => {
       ) : (
         <div className="h-screen text-center text-2xl">
           <p> You have no posts yet.</p>
-            <button className="btn mt-4" onClick={() => navigate("/create-post")}>
-              Create a post
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-            </button>
+          <button className="btn mt-4" onClick={() => navigate("/create-post")}>
+            Create a post
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+          </button>
         </div>
       )}
-     
+
       <Modal
         show={showModal}
         onClose={() => setShowModal(false)}
