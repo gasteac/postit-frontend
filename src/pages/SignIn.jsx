@@ -132,7 +132,7 @@ export const SignIn = () => {
           </form>
           <div className="flex gap-2 justify-end px-1 text-sm mt-3">
             <span>Don't have an account?</span>
-            <Link to="/signup" className="hiText font-bold">
+            <Link to="/signup" className="text-primary font-bold">
               Sign Up
             </Link>
           </div>
