@@ -300,10 +300,11 @@ export const DashProfile = () => {
             className="relative w-36 h-36 self-center cursor-pointer shadow-lg overflow-hidden rounded-full mt-5"
           >
             {imageFileUploadProgress && (
+
               <CircularProgressbar
                 value={imageFileUploadProgress || 0}
                 text={`${imageFileUploadProgress || 0}%`}
-                strikeWidth={5}
+                strikeWidth={1}
                 styles={{
                   root: {
                     position: "absolute",
@@ -313,10 +314,7 @@ export const DashProfile = () => {
                     fontSize: "1.8rem",
                     fontWeight: "bold",
                   },
-                  path: {
-                    stroke: `rgba(62, 231, 153, ${imageFileUploadProgress / 100
-                      })`,
-                  },
+
                 }}
               />
             )}
@@ -324,23 +322,24 @@ export const DashProfile = () => {
               //Si el usuario subió una imagen la muestro, sino muestro la imagen de perfil del usuario
               src={imageFileUrl ? imageFileUrl : currentUser.profilePic}
               alt="user"
-              className="rounded-full w-full h-full border-8 object-cover border-[lightgray] "
+              className="rounded-full w-full h-full  object-cover border-[lightgray] "
             />
           </div>
         </div>
 
         <div className="flex flex-col gap-2 px-5 w-full h-full sm:max-w-[30rem]">
           {(updateUserError || updateUserSuccess) && (
-            <Alert
-              color={updateUserError ? "failure" : "success"}
-              className="font-semibold"
-            >
-              {updateUserError ? updateUserError : updateUserSuccess}
-            </Alert>
+
+            <div role="alert" className={`alert ${updateUserError ? "alert-error" : "alert-success"}`}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span className="font-semibold"> {updateUserError ? updateUserError : updateUserSuccess}</span>
+            </div>
           )}
-          <div className="group">
+          <div className="group flex flex-col items-start justify-center gap-2">
             <Label value="Username" className="groupLabel"></Label>
-            <TextInput
+
+            <input
+              className="input input-bordered w-full"
               type="text"
               placeholder="username"
               id="username"
@@ -358,9 +357,10 @@ export const DashProfile = () => {
 
           </div>
 
-          <div className="group">
+          <div className="group flex flex-col items-start justify-center gap-2">
             <Label value="Email" className="groupLabel"></Label>
-            <TextInput
+            <input
+              className="input input-bordered w-full"
               type="email"
               placeholder="name@company.com"
               id="email"
@@ -378,9 +378,10 @@ export const DashProfile = () => {
 
           </div>
 
-          <div className="group">
+          <div className="group flex flex-col items-start justify-center gap-2">
             <Label value="Password" className="groupLabel"></Label>
-            <TextInput
+            <input
+              className="input input-bordered w-full"
               type="password"
               placeholder="password"
               id="password"
@@ -394,10 +395,9 @@ export const DashProfile = () => {
               </h6>
             ) : null}
           </div>
-          <Button
-            className="mt-3"
+          <button
+            className="btn btn-accent mt-3"
             type="submit"
-            gradientDuoTone="purpleToBlue"
             disabled={isLoading || imageFileUploading}
           >
             {isLoading ? (
@@ -408,8 +408,8 @@ export const DashProfile = () => {
             ) : (
               <span>Update Profile</span>
             )}
-          </Button>
-          {currentUser.isAdmin && (
+          </button>
+          {/* {currentUser.isAdmin && (
             <Link to="/create-post">
               <Button
                 className="mt-3 w-full"
@@ -427,7 +427,7 @@ export const DashProfile = () => {
                 )}
               </Button>
             </Link>
-          )}
+          )} */}
           <div className="justify-between flex flex-col items-center gap-4 mt-5">
             <span
               className="cursor-pointer font-semibold hiText"

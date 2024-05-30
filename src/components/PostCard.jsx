@@ -6,7 +6,7 @@ export const PostCard = ({ post }) => {
   return (
     <div className="group relative lg:hover:scale-105  transition-all ease-in-out duration-150 rounded-3xl m-5 overflow-hidden shadow-lg">
       <Link to={`/post/${post.slug}`}>
-        <img
+        {/* <img
           src={post.image}
           alt={post.title}
           className="w-screen rounded-xl h-52 lg:w-96 lg:h-96 object-cover transition-all ease-in-out duration-150"
@@ -24,7 +24,19 @@ export const PostCard = ({ post }) => {
           className=" text-white absolute line-clamp-1 font-semibold bottom-2 p-4 h-16"
         >
           {post.content}
-        </p>
+        </p> */}
+
+        <div className="card w-96 bg-base-300 shadow-xl">
+          <figure><img className="w-screen rounded-xl h-52 lg:w-96 lg:h-52 object-cover transition-all ease-in-out duration-150" src={post.image} alt={post.title} /></figure>
+          <div className="card-body ">
+            <h2 className="card-title">
+              {post.title}
+            </h2>
+            <p className=" line-clamp-2">{post.content}</p>
+           
+          </div>
+        </div>
+
 
         {/* <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black opacity-90 rounded-3xl lg:group-hover:bg-black lg:group-hover:bg-opacity-40 " /> */}
         {/* <Button

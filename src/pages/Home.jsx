@@ -74,7 +74,7 @@ export const Home = () => {
           }
         >
           <button
-            className="btn btn-outline btn-primary btn-wide"
+            className="btn btn-outline  btn-wide"
           >
             My profile
           </button>
@@ -82,14 +82,14 @@ export const Home = () => {
       
         <Link to={`/all-posts`}>
           <button
-            className="btn btn-outline btn-secondary btn-wide"
+            className="btn btn-outline  btn-wide"
           >
             See all posts
           </button>
         </Link>
         <Link to={`/create-post`}>
           <button
-            className="btn btn-outline btn-accent btn-wide"
+            className="btn btn-outline  btn-wide"
           >
             Create a post
           </button>
@@ -97,14 +97,14 @@ export const Home = () => {
         </>) : (<>
             <Link to={`/all-posts`}>
               <button
-                className="btn btn-outline btn-secondary btn-wide"
+                className="btn btn-outline btn-wide"
               >
                 See all posts
               </button>
             </Link>
             <Link to={`/signin`}>
               <button
-                className="btn btn-outline btn-accent btn-wide"
+                className="btn btn-outline btn-wide"
               >
                 Sign In
               </button>
