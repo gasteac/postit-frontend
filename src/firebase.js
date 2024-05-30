@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: "facerook-gasteac.firebaseapp.com",
-  projectId: "facerook-gasteac",
-  storageBucket: "facerook-gasteac.appspot.com",
-  messagingSenderId: "333118237893",
-  appId: "1:333118237893:web:7db225a40215088b88d4ac",
+  apiKey: "AIzaSyBb4Fqhjvcu1AXlDaV-NSEmXCR1yPOi4bQ",
+  authDomain: "postit-cf654.firebaseapp.com",
+  projectId: "postit-cf654",
+  storageBucket: "postit-cf654.appspot.com",
+  messagingSenderId: "306043314871",
+  appId: "1:306043314871:web:8b64d0f24580ae22952332"
 };
 
 // Initialize Firebase
