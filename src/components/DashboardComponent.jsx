@@ -219,17 +219,7 @@ export const DashboardComponent = () => {
                     <td className="md:max-w-xl">{comment.content}</td>
                     <td>{comment.postId}</td>
                     <td>{comment.userId}</td>
-                    <span
-                      onClick={() => {
-                        document.getElementById('deleteComment').showModal();
-                        setCommentIdtoDelete(comment._id);
-                        setCommentToDelete(comment.content);
-                      }}
-                      className="cursor-pointer text-red-400 font-medium hover:underline"
-                    >
-                      Delete
-                    </span>
-                  </tr>
+                                  </tr>
                 </tbody>
               ))}
             </table>
