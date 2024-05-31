@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Tooltip } from "@material-tailwind/react";
 import {
   Button,
   Label,
@@ -293,42 +294,42 @@ export const DashProfile = () => {
             accept="image/*"
             onChange={handleImageChange}
           />
-          <div
-            //Cuando se hace click en la imagen, se hace click en el input file mediante filePickerRef.current.click()
-            onClick={() => filePickerRef.current.click()}
-            className="relative w-36 h-36 self-center cursor-pointer shadow-lg overflow-hidden rounded-full mt-5"
-          >
-            {imageFileUploadProgress && (
+          <Tooltip className=" px-4 py-2 mt-2" content="Change Image" placement="bottom">
+            <div
+              //Cuando se hace click en la imagen, se hace click en el input file mediante filePickerRef.current.click()
+              onClick={() => filePickerRef.current.click()}
+              className="relative w-36 h-36 self-center cursor-pointer shadow-lg overflow-hidden rounded-full mt-5"
+            >
 
-              <CircularProgressbar
-                value={imageFileUploadProgress || 0}
-                text={`${imageFileUploadProgress || 0}%`}
-                strikeWidth={1}
-                styles={{
-                  root: {
-                    position: "absolute",
-                  },
-                  text: {
-                    fill: "white",
-                    fontSize: "1.8rem",
-                    fontWeight: "bold",
-                  },
+              {imageFileUploadProgress && (
+                <CircularProgressbar
+                  value={imageFileUploadProgress || 0}
+                  text={`${imageFileUploadProgress || 0}%`}
+                  strikeWidth={1}
+                  styles={{
+                    root: {
+                      position: "absolute",
+                    },
+                    text: {
+                      fill: "white",
+                      fontSize: "1.8rem",
+                      fontWeight: "bold",
+                    },
 
-                }}
+                  }}
+                />
+              )}
+              <img
+                //Si el usuario subió una imagen la muestro, sino muestro la imagen de perfil del usuario
+                src={imageFileUrl ? imageFileUrl : currentUser.profilePic}
+                alt="user"
+                className="rounded-full w-full h-full  object-cover border-[lightgray] "
               />
-            )}
-            <div className="tooltip tooltip-open tooltip-bottom" data-tip="Click to change">
-              <button className="hidden btn">tooltip</button>
-              </div>
-            <img
-              //Si el usuario subió una imagen la muestro, sino muestro la imagen de perfil del usuario
-              src={imageFileUrl ? imageFileUrl : currentUser.profilePic}
-              alt="user"
-              className="rounded-full w-full h-full  object-cover border-[lightgray] "
-            />
-          </div>
-        </div>
+            </div>
 
+
+          </Tooltip>
+        </div>
         <div className="flex flex-col gap-2 px-5 w-full h-full sm:max-w-[30rem]">
           {(updateUserError || updateUserSuccess) && (
 
@@ -339,7 +340,6 @@ export const DashProfile = () => {
           )}
           <div className="group flex flex-col items-start justify-center gap-2">
             <Label value="Username" className="groupLabel"></Label>
-
             <input
               className="input input-bordered w-full"
               type="text"
@@ -356,9 +356,7 @@ export const DashProfile = () => {
                 {formik.errors.username}
               </h6>
             ) : null}
-
           </div>
-
           <div className="group flex flex-col items-start justify-center gap-2">
             <Label value="Email" className="groupLabel"></Label>
             <input
@@ -377,9 +375,7 @@ export const DashProfile = () => {
                 {formik.errors.email}
               </h6>
             ) : null}
-
           </div>
-
           <div className="group flex flex-col items-start justify-center gap-2">
             <Label value="Password" className="groupLabel"></Label>
             <input
@@ -411,26 +407,7 @@ export const DashProfile = () => {
               <span>Update Profile</span>
             )}
           </button>
-          {/* {currentUser.isAdmin && (
-            <Link to="/create-post">
-              <Button
-                className="mt-3 w-full"
-                type="button"
-                gradientDuoTone="purpleToPink"
-                disabled={isLoading || imageFileUploading}
-              >
-                {isLoading ? (
-                  <>
-                    <Spinner size="sm" />
-                    <span className="ml-3">Loading..</span>
-                  </>
-                ) : (
-                  <span>Create a post</span>
-                )}
-              </Button>
-            </Link>
-          )} */}
-          <div className="justify-between flex flex-col items-center gap-4 mt-5">
+          <div className="justify-between flex flex-col items-center gap-4 mt-2">
             <span
               className="cursor-pointer font-semibold hiText"
               onClick={() => document.getElementById('deleteAccount').showModal()}

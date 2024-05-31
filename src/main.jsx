@@ -9,8 +9,6 @@ import { store, persistor } from "./redux/store.js";
 //persistente se encarga de manejar la lógica relacionada con la carga del estado persistido antes de que la aplicación se renderice.
 //esto es lo que lo diferencia de un simple localstorage
 import { PersistGate } from "redux-persist/integration/react";
-//importamos flowbite para el tema de la app
-import { Flowbite } from "flowbite-react";
 ReactDOM.createRoot(document.getElementById("root")).render(
   // {/* PersistGate: envuelve a todo el árbol de componentes de la aplicación que
   // dependan del estado persistido. Al pasarle el persistor, PersistGate se encarga de manejar
