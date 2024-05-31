@@ -167,7 +167,7 @@ export const CommentSection = ({ postId }) => {
               onLike={handleLike}
               key={comment._id}
               handleDeleteComment={(commentId, commentContent) => {
-                setShowModal(true),
+                document.getElementById('deleteOwnComment').showModal();
                   setCommentToDelete(commentId),
                   setCommentContent(commentContent);
               }}
@@ -175,39 +175,22 @@ export const CommentSection = ({ postId }) => {
           ))}
         </div>
       )}
-      <Modal
-        show={showModal}
-        onClose={() => setShowModal(false)}
-        popup
-        dismissible
-        size="md"
-      >
-        <Modal.Header />
-        <Modal.Body className="flex items-center justify-center flex-col gap-3 text-justify">
-          <HiOutlineExclamationCircle className="text-red-500 text-6xl" />
-          <h1 className="text-center text-2xl font-semibold dark:text-white">
-            Delete this comment?
-          </h1>
-          <p className="dark:text-white">{commentContent}</p>
-          <div className="flex justify-between gap-5">
-            <Button
-              color="failure"
-              onClick={() => {
+      <dialog id="deleteOwnComment" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Delete "{commentContent}" ?</h3>
+          <p className="py-4">This action is irreversible.</p>
+          <div className="modal-action">
+            <form method="dialog" className="flex gap-2">
+              <button onClick={() => {
                 handleDeleteComment(commentToDelete);
                 setShowModal(false);
-              }}
-            >
-              Delete
-            </Button>
-            <Button
-              onClick={() => setShowModal(false)}
-              gradientDuoTone="greenToBlue"
-            >
-              Cancel
-            </Button>
+              }} className="btn text-red-600">Delete</button>
+              <button className="btn">Close</button>
+            </form>
           </div>
-        </Modal.Body>
-      </Modal>
+        </div>
+      </dialog>
+      
     </div>
   );
 };

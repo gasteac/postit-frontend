@@ -43,6 +43,7 @@ export const Comment = ({ comment, onLike, handleDeleteComment }) => {
           </span>
           {currentUser && currentUser._id === comment.userId && (
             <span
+            
               onClick={() => handleDeleteComment(comment._id, comment.content)}
               className="text-red-500 text-xs cursor-pointer hover:filter hover:brightness-150"
             >
