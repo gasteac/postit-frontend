@@ -317,12 +317,14 @@ export const DashProfile = () => {
                 }}
               />
             )}
+            <div className="tooltip tooltip-open tooltip-bottom" data-tip="Click to change">
             <img
               //Si el usuario subió una imagen la muestro, sino muestro la imagen de perfil del usuario
               src={imageFileUrl ? imageFileUrl : currentUser.profilePic}
               alt="user"
               className="rounded-full w-full h-full  object-cover border-[lightgray] "
             />
+            </div>
           </div>
         </div>
 
